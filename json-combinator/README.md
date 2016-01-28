@@ -52,5 +52,5 @@ String :: Text -> Json
 λ> :t literal
 literal :: Parser Text
 λ> :t fmap String literal      -- == String <$> literal
-fmap String literal :: Parser Text Json
+fmap String literal :: Parser Json
 ```
