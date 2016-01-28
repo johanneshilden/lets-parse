@@ -19,6 +19,8 @@ type Dictionary = H.Map Text Json
 ```
 
 ```haskell
+import Data.Attoparsec.Text
+
 jsonString :: Parser Json
 jsonNumber :: Parser Json
 jsonBoolean :: Parser Json
