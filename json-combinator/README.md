@@ -30,3 +30,9 @@ jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue,
 literal :: Parser Text
 literal = ...
 ```
+
+```haskell
+-- | Decode a JSON string literal.
+jsonString :: Parser Json
+jsonString = String <$> literal 
+```
