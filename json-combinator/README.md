@@ -51,6 +51,6 @@ jsonString = String <$> literal
 String :: Text -> Json
 λ> :t literal
 literal :: Parser Text
-λ> :t fmap String literal      -- === String <$> literal
+λ> :t fmap String literal      -- == String <$> literal
 fmap String literal :: Parser Text Json
 ```
