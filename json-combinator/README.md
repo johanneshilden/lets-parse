@@ -1,4 +1,7 @@
 
+```
+  build-depends:       base >=4.6, attoparsec >=0.13, text, containers
+```
 
 ```haskell
 import Data.Attoparsec.Text
