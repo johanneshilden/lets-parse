@@ -45,3 +45,12 @@ literal = ...
 jsonString :: Parser Json
 jsonString = String <$> literal 
 ```
+
+```haskell
+λ> :t String
+String :: Text -> Json
+λ> :t literal
+literal :: Parser Text
+λ> :t fmap String literal      -- === String <$> literal
+fmap String literal :: Parser Text Json
+```
