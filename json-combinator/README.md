@@ -26,8 +26,7 @@ jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue,
 ```
 
 ```haskell
--- | Parse a string literal, i.e., zero or more characters enclosed in 
---   double quotes.
+-- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
 literal :: Parser Text
 literal = ...
 ```
