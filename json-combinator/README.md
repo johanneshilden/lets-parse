@@ -47,6 +47,8 @@ literal :: Parser Text
 literal = ...
 ```
 
+Parsing a JSON string is now as easy as lifting the String constructor into the Parser monad and ... zzz
+
 ```haskell
 -- | Decode a JSON string literal.
 jsonString :: Parser Json
