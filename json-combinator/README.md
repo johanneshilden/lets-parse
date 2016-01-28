@@ -10,6 +10,8 @@ import Data.Text
 import qualified Data.Map.Strict as H
 ```
 
+We will introduce a simple algebraic data type to represent a JSON value in Haskell-land.
+
 ```haskell
 data Json = Object  !Dictionary  
           | Array   ![Json]  
