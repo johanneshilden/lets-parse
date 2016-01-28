@@ -1,8 +1,13 @@
 
 
 ```haskell
+import Data.Attoparsec.Text
 import Data.Text
 
+import qualified Data.Map.Strict as H
+```
+
+```haskell
 data Json = Object  !Dictionary  
           | Array   ![Json]  
           | Number  !Double 
@@ -13,20 +18,9 @@ data Json = Object  !Dictionary
 ```
 
 ```haskell
-import qualified Data.Map.Strict as H
-
 type Dictionary = H.Map Text Json
 ```
 
 ```haskell
-import Data.Attoparsec.Text
-
-jsonString :: Parser Json
-jsonNumber :: Parser Json
-jsonBoolean :: Parser Json
-jsonNull :: Parser Json
-jsonObject :: Parser Json
-jsonArray :: Parser Json
-jsonValue :: Parser Json
-json :: Parser Json
+jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue, json :: Parser Json
 ```
