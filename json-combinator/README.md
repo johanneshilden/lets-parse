@@ -1,3 +1,4 @@
+This is an example of how parser combinators work in Haskell. Don't use this parser in production code.
 
 ```
   build-depends:       base >=4.6, attoparsec >=0.13, text, containers
@@ -9,8 +10,7 @@ import Data.Text
 
 import qualified Data.Map.Strict as H
 ```
-
-We will introduce a simple algebraic data type to represent a JSON value in Haskell-land.
+First, we'll introduce a simple algebraic data type to represent a JSON value in Haskell-land.
 
 ```haskell
 data Json = Object  !Dictionary  
@@ -21,6 +21,8 @@ data Json = Object  !Dictionary
           | Null
     deriving (Show, Eq)
 ```
+
+`Dictionary` is a type synonym for a `Map` with Text keys and Json value entries:
 
 ```haskell
 type Dictionary = H.Map Text Json
