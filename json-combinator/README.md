@@ -10,7 +10,7 @@ import Data.Text
 
 import qualified Data.Map.Strict as H
 ```
-First, we'll introduce a simple algebraic data type to represent a JSON value in Haskell-land.
+First, we'll introduce a simple algebraic data type to represent JSON data in Haskell-land.
 
 ```haskell
 data Json = Object  !Dictionary  
@@ -22,7 +22,7 @@ data Json = Object  !Dictionary
     deriving (Show, Eq)
 ```
 
-`Dictionary` is a type synonym for a `Map` with Text keys and Json value entries:
+`Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries:
 
 ```haskell
 type Dictionary = H.Map Text Json
