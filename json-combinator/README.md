@@ -25,7 +25,7 @@ data Json = Object  !Dictionary
     deriving (Show, Eq)
 ```
 
-Most of this is straightforward. It makes sense to combine *true* and *false* into a `Boolean` constructor. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
+Most of this is straightforward. It makes sense to combine *true* and *false* into a single constructor. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
 
 ```haskell
 type Dictionary = H.Map Text Json
