@@ -1,4 +1,4 @@
-This is a simple example of how combinator parsing works in Haskell. Don't use this parser in production code. You may instead want to have a look at Aeson.
+This is a simple example of how combinator parsing works in Haskell. Don't use this parser in production code. You may instead want to have a look at Aeson for a mature and well-maintained JSON parsing library.
 
 ```
   build-depends:       base >=4.6, attoparsec >=0.13, text, containers
@@ -11,7 +11,7 @@ import Data.Text
 import qualified Data.Map.Strict as H
 ```
 
-First, we'll introduce a simple algebraic data type to represent JSON data in Haskell-land. Looking at [http://json.org/](json.org), we can see that a JSON value is always one of the following; a string, a number, an object, an array, true, false, or null.
+First, we'll introduce a simple algebraic data type to represent JSON data in Haskell-land. Looking at [http://json.org/](json.org), we can see that a JSON value is exactly one of the following; a string, a number, an object, an array, true, false, or null.
 
 ```haskell
 data Json = Object  !Dictionary  
@@ -29,13 +29,13 @@ data Json = Object  !Dictionary
 type Dictionary = H.Map Text Json
 ```
 
-We will need functions to parse each of these types of values.
+We will need combinators to parse each of these separately.
 
 ```haskell
 jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue :: Parser Json
 ```
 
-The value type is the easiest.
+The value type is the easiest. We don't have to think about the implementation of the various parsers at this point.
 
 ```haskell
 jsonValue = jsonObject
