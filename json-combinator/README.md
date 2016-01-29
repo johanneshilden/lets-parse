@@ -35,7 +35,7 @@ We will need combinators to parse each of these separately.
 jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue :: Parser Json
 ```
 
-The value type is the easiest. We don't have to think about the implementation of the various parsers at this point.
+The value type is the easiest to implement since it, by definition, should match exactly on of the other types.
 
 ```haskell
 jsonValue = jsonObject
