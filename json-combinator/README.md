@@ -6,6 +6,8 @@ This is a simple example of how combinator parsing works in Haskell.
   build-depends:       base >=4.6, attoparsec >=0.13, text, containers
 ```
 
+First, we need some imports.
+
 ```haskell
 import Data.Attoparsec.Text
 import Data.Text
@@ -13,7 +15,7 @@ import Data.Text
 import qualified Data.Map.Strict as H
 ```
 
-We'll introduce a simple algebraic data type to represent JSON data in Haskell-land. Looking at [json.org](http://json.org/), we can see that a JSON value is exactly one of the following; a *string*, a *number*, an *object*, an *array*, *true*, *false*, or *null*.
+Let's introduce a simple algebraic data type to represent JSON data in Haskell-land. Looking at [json.org](http://json.org/), we can see that a JSON value is exactly one of the following; a *string*, a *number*, an *object*, an *array*, *true*, *false*, or *null*.
 
 ```haskell
 data Json = Object  !Dictionary  
@@ -37,7 +39,7 @@ We will need combinators to parse each of these separately.
 jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue :: Parser Json
 ```
 
-The value parser is the easiest to implement since it, by definition, should match exactly on of the other types.
+The top-level value parser is the easiest to implement since it, by definition, should match exactly on of the other types.
 
 ```haskell
 jsonValue = jsonObject
