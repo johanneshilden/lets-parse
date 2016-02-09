@@ -19,7 +19,7 @@ Let's introduce a simple algebraic data type to represent JSON data in Haskell-l
 
 ![value](value.gif)
 
-(Image from [json.org](http://json.org/) ).
+Image from [json.org](http://json.org/).
 
 ```haskell
 data Json = Object  !Dictionary  
