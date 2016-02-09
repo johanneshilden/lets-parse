@@ -75,7 +75,7 @@ padded :: Parser a -> Parser a
 padded parser = skipSpace *> parser <* skipSpace
 ```
 
-### Some helpers
+### Some more helpers
 
 ```haskell
 oneOf :: String -> Parser Char
