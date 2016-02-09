@@ -62,6 +62,8 @@ This type looks very similar to the railroad diagram above from the JSON specifi
 
 > Whitespace can be inserted between any pair of tokens. 
 
+To make sure that we allow whitespace characters before the actual value being parsed, I am going to wrap the `jsonValue` parser in another function which will serve as the main API for the library.
+
 ```haskell
 -- | Decode JSON data with possible leading blank space.
 json :: Parser Json
