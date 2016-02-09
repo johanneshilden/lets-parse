@@ -154,6 +154,15 @@ jsonObject = do
     keyValuePair = ...            -- See above
 ```
 
+```haskell
+jsonObject :: Parser Json
+jsonObject = 
+    char '{' *> pairs <* char '}'
+  where
+    pairs = Object . H.fromList <$> padded keyValuePair `sepBy` char ','
+    keyValuePair = ...            -- See above
+```
+
 ### Array
 
 ![array](array.gif)
