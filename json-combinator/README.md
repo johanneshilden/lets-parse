@@ -125,7 +125,8 @@ So, something like
             <|> unicode 
             <|> notChar '\\'
 ```
-.
+
+should do the trick.
 
 ```haskell
     special = char '\\' *> oneOf "\"\\/bfnrt"
