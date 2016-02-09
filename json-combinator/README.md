@@ -87,7 +87,18 @@ fmap String literal :: Parser Json
 
 ### Boolean
 
+```haskell
+jsonBoolean = true <|> false
+  where
+    true  = "true"  *> return (Boolean True)
+    false = "false" *> return (Boolean False)
+```
+
 ### Null
+
+```haskell
+jsonNull = "null" *> return Null
+```
 
 ### Object
 
