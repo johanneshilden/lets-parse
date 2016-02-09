@@ -95,6 +95,15 @@ maybeOption p = option Nothing (Just <$> p)
 
 > Image from [json.org](http://json.org/).
 
+A string literal is a (possibly empty) sequence of Unicode characters of valid type, enclosed in quotes. (We are not going to worry about what *valid character* means right now.) To make things easier, we can define a function which will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and the end of the input.
+
+```haskell
+manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
+manyEnclosedIn parser encl = encl *> manyTill parser encl
+```
+
+We can now define the string parser in terms of `manyEnclosedIn`.
+
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
 literal :: Parser Text
@@ -103,16 +112,11 @@ literal = pack <$> validChar `manyEnclosedIn` char '"'
     ... 
 ```
 
-```haskell
-manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
-manyEnclosedIn parser encl = encl *> manyTill parser encl
-```
+Now going back to the characters accepted by `validChar` and looking at the specification, a *valid character* here is one of 
 
-A *valid character* here means 
-
-* `\` followed by any of `"`, `\`, `/`, `b`, `f`, `n`, `r`, or `t`;
-* a Unicode escape sequence; or
-* any character except `\` and `"`.
+1. `\` followed by any of `"`, `\`, `/`, `b`, `f`, `n`, `r`, or `t`;
+2. a Unicode escape sequence; or
+3. any character except `\` and `"`.
 
 ```haskell
     validChar = special 
