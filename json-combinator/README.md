@@ -58,7 +58,26 @@ jsonValue = jsonObject
 
 This type is very similar to the railroad diagram above from the JSON specification.
 
+### Whitespace
+
+> Whitespace can be inserted between any pair of tokens. 
+
+```haskell
+-- | Decode JSON data with possible leading blank space.
+json :: Parser Json
+json = skipSpace *> jsonValue 
+```
+
+```haskell
+padded :: Parser a -> Parser a
+padded match = skipSpace *> match <* skipSpace
+```
+
 ### String
+
+![string](string.gif)
+
+> Image from [json.org](http://json.org/).
 
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
@@ -85,6 +104,10 @@ fmap String literal :: Parser Json
 
 ### Number
 
+![number](number.gif)
+
+> Image from [json.org](http://json.org/).
+
 ### Boolean
 
 ```haskell
@@ -106,4 +129,12 @@ jsonNull = "null" *> return Null
 
 ### Object
 
+![object](object.gif)
+
+> Image from [json.org](http://json.org/).
+
 ### Array
+
+![array](array.gif)
+
+> Image from [json.org](http://json.org/).
