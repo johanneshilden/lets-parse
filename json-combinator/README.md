@@ -108,7 +108,35 @@ manyEnclosedIn :: Parser a -> Parser b -> Parser [a]
 manyEnclosedIn parser encl = encl *> manyTill parser encl
 ```
 
-Parsing a JSON string is now as easy as lifting the `String` constructor into the `Parser` monad.
+A *valid character* here means 
+
+* `\` followed by any of `"`, `\`, `/`, `b`, `f`, `n`, `r`, or `t`;
+* a unicode escape sequence; or
+* any character except `\` and `"`.
+
+```haskell
+    validChar = special 
+            <|> unicode 
+            <|> notChar '\\'
+```
+
+```haskell
+    special = char '\\' *> oneOf "\"\\/bfnrt"
+```
+
+```haskell
+    unicode :: Parser Char
+    unicode = do
+        string "\\u"
+        code <- count 4 hexDigit
+        return $ chr $ read $ "0x" ++ code
+```
+
+```haskell
+    hexDigit = oneOf "0123456789abcdefABCDEF"
+```
+
+Having this, parsing a JSON string is now as easy as lifting the `String` constructor into the `Parser` monad.
 
 ```haskell
 -- | Decode a JSON string literal.
