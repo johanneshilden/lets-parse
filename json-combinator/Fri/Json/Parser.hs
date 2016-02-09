@@ -31,9 +31,8 @@ maybeOption p = option Nothing (Just <$> p)
 -- | Parse a string literal, i.e., zero or more characters enclosed in 
 --   double quotes.
 literal :: Parser Text
-literal = pack <$> chars
+literal = char '"' >> pack <$> manyTill validChar (char '"')
   where
-    chars = char '"' *> manyTill validChar (char '"')
     validChar = special 
             <|> unicode 
             <|> notChar '\\'
