@@ -112,7 +112,7 @@ literal = pack <$> validChar `manyEnclosedIn` char '"'
     ... 
 ```
 
-Now going back to the characters accepted by `validChar` and looking at the specification, a *valid character* here is one of 
+Now going back to the characters accepted by `validChar`. Looking at the specification, we see that a *valid character* here is one of 
 
 1. `\` followed by any of `"`, `\`, `/`, `b`, `f`, `n`, `r`, or `t`;
 2. a Unicode escape sequence; or
