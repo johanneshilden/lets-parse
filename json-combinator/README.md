@@ -56,6 +56,8 @@ jsonValue = jsonObject
         <|> jsonNull
 ```
 
+### String
+
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
 literal :: Parser Text
@@ -78,3 +80,13 @@ literal :: Parser Text
 λ> :t fmap String literal      -- == String <$> literal
 fmap String literal :: Parser Json
 ```
+
+### Number
+
+### Boolean
+
+### Null
+
+### Object
+
+### Array
