@@ -58,6 +58,21 @@ jsonValue = jsonObject
 
 This type is very similar to the railroad diagram above from the JSON specification.
 
+### Whitespace
+
+> Whitespace can be inserted between any pair of tokens. Excepting a few encoding details, that completely describes the language.
+
+```haskell
+-- | Decode JSON data with possible leading blank space.
+json :: Parser Json
+json = skipSpace *> jsonValue 
+```
+
+```haskell
+padded :: Parser a -> Parser a
+padded match = skipSpace *> match <* skipSpace
+```
+
 ### String
 
 ```haskell
