@@ -143,9 +143,11 @@ jsonNull = "null" *> return Null
 jsonArray :: Parser Json
 jsonArray = do
     char '['
-    values <- padded jsonValue `sepBy` char ','
+    values <- value `sepBy` char ','
     char ']'
     return $ Array values
+  where
+    value = padded jsonValue
 ```
 
 ```haskell
