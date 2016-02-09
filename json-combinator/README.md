@@ -137,7 +137,7 @@ jsonNull = "null" *> return Null
 keyValuePair :: Parser (Text, Json)
 keyValuePair = do
     key <- literal
-    padded (char ':')             -- Ignore arbitrary whitespace before and after the colon
+    padded (char ':')             -- Ignore whitespace before and after the colon
     value <- jsonValue
     return (key, value)
 ```
