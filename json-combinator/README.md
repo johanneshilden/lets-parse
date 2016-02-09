@@ -169,6 +169,10 @@ Numbers are slightly trickier. In particular, we need to consider scientific not
 
 > Image from [json.org](http://json.org/).
 
+```
+[-] (integral part) (fractional part) (exponential part)
+```
+
 ### Boolean
 
 ```haskell
