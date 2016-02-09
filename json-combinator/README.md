@@ -68,6 +68,8 @@ json :: Parser Json
 json = skipSpace *> jsonValue 
 ```
 
+It is also useful to introduce a simple helper that translates a parser to one which ignores whitespace characters on each side of the input.
+
 ```haskell
 padded :: Parser a -> Parser a
 padded parser = skipSpace *> parser <* skipSpace
