@@ -28,10 +28,13 @@ oneOf = satisfy . inClass
 maybeOption :: Parser a -> Parser (Maybe a)
 maybeOption p = option Nothing (Just <$> p)
 
+manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
+manyEnclosedIn parser encl = encl *> manyTill parser encl
+
 -- | Parse a string literal, i.e., zero or more characters enclosed in 
 --   double quotes.
 literal :: Parser Text
-literal = char '"' >> pack <$> manyTill validChar (char '"')
+literal = pack <$> validChar `manyEnclosedIn` char '"' 
   where
     validChar = special 
             <|> unicode 
