@@ -143,7 +143,6 @@ keyValuePair = do
 ```
 
 ```haskell
--- | Decode a JSON object.
 jsonObject :: Parser Json
 jsonObject = do
     char '{'
@@ -155,12 +154,16 @@ jsonObject = do
 ```
 
 ```haskell
+-- | Decode a JSON object.
 jsonObject :: Parser Json
-jsonObject = 
-    char '{' *> pairs <* char '}'
+jsonObject = char '{' *> pairs <* char '}'
   where
     pairs = Object . H.fromList <$> padded keyValuePair `sepBy` char ','
-    keyValuePair = ...            -- See above
+    keyValuePair = do
+        key <- literal
+        padded (char ':') 
+        value <- jsonValue
+        return (key, value)    
 ```
 
 ### Array
