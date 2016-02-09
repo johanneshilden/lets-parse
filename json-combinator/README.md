@@ -111,7 +111,7 @@ manyEnclosedIn parser encl = encl *> manyTill parser encl
 A *valid character* here means 
 
 * `\` followed by any of `"`, `\`, `/`, `b`, `f`, `n`, `r`, or `t`;
-* a unicode escape sequence; or
+* a Unicode escape sequence; or
 * any character except `\` and `"`.
 
 ```haskell
