@@ -138,3 +138,16 @@ jsonNull = "null" *> return Null
 ![array](array.gif)
 
 > Image from [json.org](http://json.org/).
+
+```haskell
+jsonArray :: Parser Json
+jsonArray = do
+    char '['
+    values <- padded jsonValue `sepBy` char ','
+    char ']'
+    return $ Array values
+```
+
+```haskell
+jsonArray = char '[' *> (Array <$> padded jsonValue `sepBy` char ',') <* char ']'
+```
