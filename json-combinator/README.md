@@ -88,6 +88,8 @@ fmap String literal :: Parser Json
 ### Boolean
 
 ```haskell
+-- | Decode a boolean.
+jsonBoolean :: Parser Json
 jsonBoolean = true <|> false
   where
     true  = "true"  *> return (Boolean True)
@@ -97,6 +99,8 @@ jsonBoolean = true <|> false
 ### Null
 
 ```haskell
+-- | Decode a null value.
+jsonNull :: Parser Json
 jsonNull = "null" *> return Null
 ```
 
