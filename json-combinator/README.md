@@ -108,7 +108,7 @@ manyEnclosedIn :: Parser a -> Parser b -> Parser [a]
 manyEnclosedIn parser encl = encl *> manyTill parser encl
 ```
 
-Parsing a JSON string is now as easy as lifting the String constructor into the Parser monad and ... 
+Parsing a JSON string is now as easy as lifting the String constructor into the Parser monad.
 
 ```haskell
 -- | Decode a JSON string literal.
