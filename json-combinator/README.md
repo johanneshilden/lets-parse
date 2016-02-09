@@ -118,11 +118,14 @@ Now going back to the characters accepted by `validChar` and looking at the spec
 2. a Unicode escape sequence; or
 3. any character except `\` and `"`.
 
+So, something like
+
 ```haskell
     validChar = special 
             <|> unicode 
             <|> notChar '\\'
 ```
+.
 
 ```haskell
     special = char '\\' *> oneOf "\"\\/bfnrt"
