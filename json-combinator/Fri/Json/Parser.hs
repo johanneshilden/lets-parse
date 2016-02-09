@@ -106,11 +106,7 @@ jsonObject = do
 
 -- | Decode a JSON array.
 jsonArray :: Parser Json
-jsonArray = do
-    char '['
-    values <- padded jsonValue `sepBy` char ','
-    char ']'
-    return $ Array values
+jsonArray = char '[' *> (Array <$> padded jsonValue `sepBy` char ',') <* char ']'
 
 -- | Decode a JSON value.
 jsonValue :: Parser Json
