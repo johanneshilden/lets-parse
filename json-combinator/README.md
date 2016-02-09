@@ -15,11 +15,13 @@ import Data.Text
 import qualified Data.Map.Strict as H
 ```
 
-Let's introduce a simple algebraic data type to represent JSON data in Haskell-land. Looking at [json.org](http://json.org/), we can see that a JSON value is exactly one of the following; a *string*, a *number*, an *object*, an *array*, *true*, *false*, or *null*.
+Looking at [json.org](http://json.org/), we can see that a JSON value is exactly one of the following; a *string*, a *number*, an *object*, an *array*, *true*, *false*, or *null*.
 
 ![value](value.gif)
 
-Image from [json.org](http://json.org/).
+> Image from [json.org](http://json.org/).
+
+Based on this knowledge, we introduce a simple algebraic data type to represent JSON data in Haskell-land. 
 
 ```haskell
 data Json = Object  !Dictionary  
