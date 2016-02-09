@@ -56,6 +56,8 @@ jsonValue = jsonObject
         <|> jsonNull
 ```
 
+This type is very similar to the railroad diagram above from the JSON specification.
+
 ### String
 
 ```haskell
