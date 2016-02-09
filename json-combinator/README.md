@@ -33,7 +33,7 @@ data Json = Object  !Dictionary
     deriving (Show, Eq)
 ```
 
-Most of this is straightforward. It makes sense to combine *true* and *false* into a single data constructor. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
+Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor that accepts a native `Bool` as its argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
 
 ```haskell
 type Dictionary = H.Map Text Json
@@ -73,6 +73,18 @@ padded :: Parser a -> Parser a
 padded parser = skipSpace *> parser <* skipSpace
 ```
 
+### Some helpers
+
+```haskell
+oneOf :: String -> Parser Char
+oneOf = satisfy . inClass
+```
+
+```haskell
+maybeOption :: Parser a -> Parser (Maybe a)
+maybeOption p = option Nothing (Just <$> p)
+```
+
 ### String
 
 ![string](string.gif)
@@ -82,7 +94,14 @@ padded parser = skipSpace *> parser <* skipSpace
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
 literal :: Parser Text
-literal = ...
+literal = pack <$> validChar `manyEnclosedIn` char '"' 
+  where
+    ... 
+```
+
+```haskell
+manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
+manyEnclosedIn parser encl = encl *> manyTill parser encl
 ```
 
 Parsing a JSON string is now as easy as lifting the String constructor into the Parser monad and ... 
