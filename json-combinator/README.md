@@ -133,6 +133,15 @@ jsonNull = "null" *> return Null
 
 > Image from [json.org](http://json.org/).
 
+```haskell
+keyValuePair :: Parser (Text, Json)
+keyValuePair = do
+    key <- literal
+    padded (char ':')             -- Ignore arbitrary whitespace before and after the colon
+    value <- jsonValue
+    return (key, value)
+```
+
 ### Array
 
 ![array](array.gif)
