@@ -142,6 +142,7 @@ jsonNull = "null" *> return Null
 Using `do`-notation, this could look something like the following.
 
 ```haskell
+-- | Decode a JSON array.
 jsonArray :: Parser Json
 jsonArray = do
     char '['
