@@ -70,7 +70,7 @@ json = skipSpace *> jsonValue
 
 ```haskell
 padded :: Parser a -> Parser a
-padded match = skipSpace *> match <* skipSpace
+padded parser = skipSpace *> parser <* skipSpace
 ```
 
 ### String
