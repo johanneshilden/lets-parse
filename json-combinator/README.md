@@ -248,5 +248,6 @@ jsonArray = do
 ```
 
 ```haskell
-jsonArray = char '[' *> (Array <$> padded jsonValue `sepBy` char ',') <* char ']'
+jsonArray = let values = padded jsonValue `sepBy` char ',' 
+             in char '[' *> (Array <$> values) <* char ']'
 ```
