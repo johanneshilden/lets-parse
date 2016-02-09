@@ -139,6 +139,8 @@ jsonNull = "null" *> return Null
 
 > Image from [json.org](http://json.org/).
 
+Using `do`-notation, this could look something like the following.
+
 ```haskell
 jsonArray :: Parser Json
 jsonArray = do
