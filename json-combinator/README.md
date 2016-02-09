@@ -60,7 +60,7 @@ This type is very similar to the railroad diagram above from the JSON specificat
 
 ### Whitespace
 
-> Whitespace can be inserted between any pair of tokens. Excepting a few encoding details, that completely describes the language.
+> Whitespace can be inserted between any pair of tokens. 
 
 ```haskell
 -- | Decode JSON data with possible leading blank space.
