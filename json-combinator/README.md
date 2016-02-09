@@ -56,7 +56,7 @@ jsonValue = jsonObject
         <|> jsonNull
 ```
 
-This type is very similar to the railroad diagram above from the JSON specification.
+This type looks very similar to the railroad diagram above from the JSON specification.
 
 ### Whitespace
 
@@ -70,7 +70,7 @@ json = skipSpace *> jsonValue
 
 ```haskell
 padded :: Parser a -> Parser a
-padded match = skipSpace *> match <* skipSpace
+padded parser = skipSpace *> parser <* skipSpace
 ```
 
 ### String
@@ -133,8 +133,35 @@ jsonNull = "null" *> return Null
 
 > Image from [json.org](http://json.org/).
 
+```haskell
+keyValuePair :: Parser (Text, Json)
+keyValuePair = do
+    key <- literal
+    padded (char ':')             -- Ignore whitespace before and after the colon
+    value <- jsonValue
+    return (key, value)
+```
+
 ### Array
 
 ![array](array.gif)
 
 > Image from [json.org](http://json.org/).
+
+Using `do`-notation, this could look something like the following.
+
+```haskell
+-- | Decode a JSON array.
+jsonArray :: Parser Json
+jsonArray = do
+    char '['
+    values <- value `sepBy` char ','
+    char ']'
+    return $ Array values
+  where
+    value = padded jsonValue
+```
+
+```haskell
+jsonArray = char '[' *> (Array <$> padded jsonValue `sepBy` char ',') <* char ']'
+```
