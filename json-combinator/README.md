@@ -126,7 +126,7 @@ So, something like
             <|> notChar '\\'
 ```
 
-should do the trick.
+should do the trick. Note that we do not have to exclude `"` from the characters accepted by the last option since `manyTill` will terminate when it runs into this character.
 
 ```haskell
     special = char '\\' *> oneOf "\"\\/bfnrt"
