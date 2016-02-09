@@ -73,6 +73,18 @@ padded :: Parser a -> Parser a
 padded parser = skipSpace *> parser <* skipSpace
 ```
 
+### Some helpers
+
+```haskell
+oneOf :: String -> Parser Char
+oneOf = satisfy . inClass
+```
+
+```haskell
+maybeOption :: Parser a -> Parser (Maybe a)
+maybeOption p = option Nothing (Just <$> p)
+```
+
 ### String
 
 ![string](string.gif)
@@ -82,9 +94,14 @@ padded parser = skipSpace *> parser <* skipSpace
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
 literal :: Parser Text
-literal = char '"' >> pack <$> manyTill validChar (char '"')
+literal = pack <$> validChar `manyEnclosedIn` char '"' 
   where
     ... 
+```
+
+```haskell
+manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
+manyEnclosedIn parser encl = encl *> manyTill parser encl
 ```
 
 Parsing a JSON string is now as easy as lifting the String constructor into the Parser monad and ... 
