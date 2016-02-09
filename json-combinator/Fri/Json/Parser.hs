@@ -91,8 +91,7 @@ jsonNull = "null" *> return Null
 
 -- | Decode a JSON object.
 jsonObject :: Parser Json
-jsonObject = 
-    char '{' *> pairs <* char '}'
+jsonObject = char '{' *> pairs <* char '}'
   where
     pairs = Object . H.fromList <$> padded keyValuePair `sepBy` char ','
     keyValuePair :: Parser (Text, Json)
