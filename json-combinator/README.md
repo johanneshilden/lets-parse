@@ -142,6 +142,27 @@ keyValuePair = do
     return (key, value)
 ```
 
+```haskell
+-- | Decode a JSON object.
+jsonObject :: Parser Json
+jsonObject = do
+    char '{'
+    body <- padded keyValuePair `sepBy` char ','
+    char '}'
+    return $ Object $ H.fromList body
+  where
+    keyValuePair = ...            -- See above
+```
+
+```haskell
+jsonObject :: Parser Json
+jsonObject = 
+    char '{' *> pairs <* char '}'
+  where
+    pairs = Object . H.fromList <$> padded keyValuePair `sepBy` char ','
+    keyValuePair = ...            -- See above
+```
+
 ### Array
 
 ![array](array.gif)
