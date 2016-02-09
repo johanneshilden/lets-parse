@@ -127,6 +127,8 @@ fmap String literal :: Parser Json
 
 ### Number
 
+Numbers are slightly trickier. In particular, we need to consider scientific notation (standard form). 
+
 ![number](number.gif)
 
 > Image from [json.org](http://json.org/).
