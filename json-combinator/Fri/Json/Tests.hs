@@ -61,6 +61,8 @@ testNumbers = do
     parseFail  jsonArray  "[1,2,3,01]"    -- 01 is not a valid number
     parseFail  jsonArray  "[1,2,3,0.01e--8]"    
     parseFail  jsonArray  "[1,2,3,0.01e+]"    
+    parseFail  jsonNumber "- 3"
+    parseFail  jsonNumber "--3"
 
 testBoolean = do
     --
