@@ -31,6 +31,9 @@ maybeOption p = option Nothing (Just <$> p)
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
 manyEnclosedIn parser encl = encl *> manyTill parser encl
 
+padded :: Parser a -> Parser a
+padded parser = skipSpace *> parser <* skipSpace
+
 -- | Parse a string literal, i.e., zero or more characters enclosed in 
 --   double quotes.
 literal :: Parser Text
@@ -50,12 +53,12 @@ literal = pack <$> validChar `manyEnclosedIn` char '"'
     -- A single hexadecimal digit
     hexDigit = oneOf "0123456789abcdefABCDEF"
 
+jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, json, jsonValue :: Parser Json
+
 -- | Decode a JSON string literal.
-jsonString :: Parser Json
 jsonString = String <$> literal 
 
 -- | Decode a JSON number.
-jsonNumber :: Parser Json
 jsonNumber = do
     sign <- maybeOption (char '-')
     int  <- return <$> char '0' <|> many1 digit
@@ -81,18 +84,15 @@ jsonNumber = do
           _        -> digits
 
 -- | Decode a boolean.
-jsonBoolean :: Parser Json
 jsonBoolean = true <|> false
   where
     true  = "true"  *> return (Boolean True)
     false = "false" *> return (Boolean False)
 
 -- | Decode a null value.
-jsonNull :: Parser Json
 jsonNull = "null" *> return Null
 
 -- | Decode a JSON object.
-jsonObject :: Parser Json
 jsonObject = char '{' *> pairs <* char '}'
   where
     pairs = Object . H.fromList <$> padded keyValuePair `sepBy` char ','
@@ -104,11 +104,10 @@ jsonObject = char '{' *> pairs <* char '}'
         return (key, value)
 
 -- | Decode a JSON array.
-jsonArray :: Parser Json
-jsonArray = char '[' *> (Array <$> padded jsonValue `sepBy` char ',') <* char ']'
+jsonArray = let values = padded jsonValue `sepBy` char ',' 
+             in char '[' *> (Array <$> values) <* char ']'
 
 -- | Decode a JSON value.
-jsonValue :: Parser Json
 jsonValue = jsonObject
         <|> jsonArray
         <|> jsonNumber
@@ -117,9 +116,5 @@ jsonValue = jsonObject
         <|> jsonNull
 
 -- | Decode JSON data with possible leading blank space.
-json :: Parser Json
 json = skipSpace *> jsonValue 
-
-padded :: Parser a -> Parser a
-padded parser = skipSpace *> parser <* skipSpace
 
