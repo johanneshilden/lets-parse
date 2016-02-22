@@ -230,7 +230,7 @@ jsonNumber = do
     ...
 ```
 
-The integer part matches exactly `"0"` or a sequence of one or more digits. For the fractional part, we use [applicative style](https://en.wikibooks.org/wiki/Haskell/Applicative_functors) to combine the `char '.'` parser with `many1 digit`.
+The integer part matches exactly `"0"` or a sequence of one or more digits. For the fractional part, we use [applicative style](https://en.wikibooks.org/wiki/Haskell/Applicative_functors) to cons the result from the `char '.'` parser with `many1 digit`.
 
 ```haskell
     fractional = (:) <$> char '.' <*> many1 digit
