@@ -48,7 +48,7 @@ data Json = Object  !Dictionary
     deriving (Show, Eq)
 ```
 
-Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor that accepts a native `Bool` as its argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
+Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor which takes a native `Bool` argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
 
 ```haskell
 type Dictionary = H.Map Text Json
