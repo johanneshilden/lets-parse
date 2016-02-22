@@ -108,7 +108,7 @@ maybeOption :: Parser a -> Parser (Maybe a)
 maybeOption p = option Nothing (Just <$> p)
 ```
 
-This function returns the result of running some action, wrapped in a `Maybe` type, i.e., `Nothing` if the parser fails without consuming input, and otherwise `Just` the result.
+This function returns the result of running some action, wrapped in a `Maybe` type, i.e., `Nothing` if the parser fails without consuming any input, and otherwise `Just` the result.
 
 ```haskell
 has :: Parser a -> Parser Bool
@@ -116,13 +116,6 @@ has p = option False (const True <$> p)
 ```
 
 This is almost like `maybeOption`, except that we ignore the result and instead just return `True` or `False`. 
-
-```haskell
-combineWith :: (a -> b -> c) -> Parser a -> Parser b -> Parser c
-combineWith op p q = op <$> p <*> q
-```
-
-This helper allows us to combine the results from two parsers, `Parser a` and `Parser b`, using some operation `(a -> b -> c)`.
 
 ### String
 
@@ -169,6 +162,8 @@ should do the trick. Note that we do not have to exclude `"` from the characters
     special = char '\\' *> oneOf "\"\\/bfnrt"
 ```
 
+These are the escaped control characters (`\` followed by any of `"\/bfnrt`).
+
 ```haskell
     unicode :: Parser Char
     unicode = do
@@ -176,6 +171,8 @@ should do the trick. Note that we do not have to exclude `"` from the characters
         code <- count 4 hexDigit
         return $ chr $ read $ "0x" ++ code
 ```
+
+The format of a Unicode character escape sequence is `\u` followed by four hexadecimal digits. We also define `hexDigit` to match a single valid hexadecimal digit.
 
 ```haskell
     hexDigit = oneOf "0123456789abcdefABCDEF"
@@ -188,6 +185,8 @@ Having this, parsing a JSON string is now as easy as lifting the `String` constr
 jsonString :: Parser Json
 jsonString = String <$> literal 
 ```
+
+The types add up nicely:
 
 ```haskell
 λ> :t String
@@ -229,11 +228,10 @@ jsonNumber = do
     ...
 ```
 
-The integer part matches exactly `"0"` or a sequence of one or more digits. 
+The integer part matches exactly `"0"` or a sequence of one or more digits. For the fractional part, we use [applicative style](https://en.wikibooks.org/wiki/Haskell/Applicative_functors) to combine the `char '.'` parser with `many1 digit`.
 
 ```haskell
-    fractional = let cons = combineWith (:) 
-                  in char '.' `cons` many1 digit
+    fractional = (:) <$> char '.' <*> many1 digit
 ```
 
 
