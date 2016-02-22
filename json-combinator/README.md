@@ -21,6 +21,13 @@ import Data.Text
 import qualified Data.Map.Strict as H
 ```
 
+The following language extensions are used:
+
+```
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE LambdaCase        #-}
+```
+
 ### JSON
 
 Looking at [json.org](http://json.org/), we can see that a JSON value is exactly one of the following; a *string*, a *number*, an *object*, an *array*, *true*, *false*, or *null*.
