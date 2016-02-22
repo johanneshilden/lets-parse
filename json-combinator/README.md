@@ -6,6 +6,8 @@ This library is an example of how combinator parsing works in Haskell.
 
 This code is for demonstration purposes only. Don't use this parser in a real application. You may instead want to have a look at [Aeson](https://hackage.haskell.org/package/aeson) for a mature, efficient and well-maintained JSON parsing library.
 
+### Dependencies
+
 ```
   build-depends:       base >=4.6, attoparsec >=0.13, text, containers
 ```
@@ -18,6 +20,8 @@ import Data.Text
 
 import qualified Data.Map.Strict as H
 ```
+
+### JSON
 
 Looking at [json.org](http://json.org/), we can see that a JSON value is exactly one of the following; a *string*, a *number*, an *object*, an *array*, *true*, *false*, or *null*.
 
