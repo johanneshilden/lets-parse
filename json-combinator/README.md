@@ -236,6 +236,7 @@ The integer part matches exactly `"0"` or a sequence of one or more digits. For 
     fractional = (:) <$> char '.' <*> many1 digit
 ```
 
+The [BNF grammar](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form) for the exponential part looks something like, `exponent  ::=  ("e" | "E") ["+" | "-"] digit+`. Here is how we can implement this:
 
 ```haskell
     exponent = do
@@ -247,8 +248,16 @@ The integer part matches exactly `"0"` or a sequence of one or more digits. For 
           _        -> digits
 ```
 
-Recall that if no exponent is present, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, and multiply the result by `10 ^ pow`.
+Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, read the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is then negated if `negative` is `True`, i.e., when a `-` is present. Below is the relevant part of the code again.
 
+```haskell
+    let number = read (int <> frac) * 10 ^ pow 
+    return $ Number 
+           $ if negative 
+                then negate number 
+                else number
+```
+                
 `Boolean` and `Null` values are straightforward:
 
 ### Boolean
