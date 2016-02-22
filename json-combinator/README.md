@@ -115,7 +115,7 @@ has :: Parser a -> Parser Bool
 has p = option False (const True <$> p)
 ```
 
-This is almost like `maybeOption`, except that we ignore the result and instead just return `True` or `False`. 
+This is almost like `maybeOption`, except that we ignore the result and instead return `True` or `False`. 
 
 ### String
 
@@ -129,7 +129,7 @@ A string literal is a (possibly empty) sequence of Unicode characters of valid t
 
 ```haskell
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
-manyEnclosedIn parser encl = encl *> manyTill parser encl
+manyEnclosedIn parser fence = fence *> manyTill parser fence
 ```
 
 We can now define the string parser in terms of `manyEnclosedIn`.
@@ -174,7 +174,7 @@ These are the escaped control characters (`\` followed by any of `"\/bfnrt`).
 
 (The `OverloadedStrings` extension allows us to write `"\\u"` instead of `string "\\u"` here.)
 
-The format of a Unicode character escape sequence is `\u` followed by four hexadecimal digits. We also define `hexDigit` to match a single valid hexadecimal digit.
+The format of a Unicode character escape sequence is `\u` followed by four hexadecimal digits. We need `hexDigit` to match a single valid hexadecimal digit, implemented as:
 
 ```haskell
     hexDigit = oneOf "0123456789abcdefABCDEF"
@@ -248,7 +248,7 @@ The [BNF grammar](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form) for th
           _        -> digits
 ```
 
-Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, read the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is then negated if `negative` is `True`, i.e., when a minus sign is present. Below is the relevant part of the code again.
+Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, [read](https://hackage.haskell.org/package/base/docs/Prelude.html#v:read) the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is then negated if `negative` is `True`, i.e., when a minus sign is present. Below is the relevant part of the code again.
 
 ```haskell
     let number = read (int <> frac) * 10 ^ pow 
