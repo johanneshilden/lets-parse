@@ -167,10 +167,12 @@ These are the escaped control characters (`\` followed by any of `"\/bfnrt`).
 ```haskell
     unicode :: Parser Char
     unicode = do
-        string "\\u"
+        "\\u"
         code <- count 4 hexDigit
         return $ chr $ read $ "0x" ++ code
 ```
+
+(The `OverloadedStrings` extension allows us to write `"\\u"` instead of `string "\\u"` here.)
 
 The format of a Unicode character escape sequence is `\u` followed by four hexadecimal digits. We also define `hexDigit` to match a single valid hexadecimal digit.
 
@@ -216,7 +218,7 @@ Everything is optional, except the integer component.
 ```haskell
 jsonNumber = do
     negative <- has (char '-')
-    int  <- unpack <$> string "0" <|> many1 digit
+    int  <- unpack <$> "0" <|> many1 digit
     frac <- option "" fractional
     pow  <- option 0 exponent
     let number = read (int <> frac) * 10 ^ pow 
