@@ -248,7 +248,7 @@ The [BNF grammar](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form) for th
           _        -> digits
 ```
 
-Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, read the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is then negated if `negative` is `True`, i.e., when a minus sign is present. Below is the relevant part of the code again.
+Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, [read](https://hackage.haskell.org/package/base/docs/Prelude.html#v:read) the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is then negated if `negative` is `True`, i.e., when a minus sign is present. Below is the relevant part of the code again.
 
 ```haskell
     let number = read (int <> frac) * 10 ^ pow 
