@@ -13,7 +13,7 @@ This code is for demonstration purposes only. Don't use this parser in a real ap
 First, we need some imports.
 
 ```haskell
-import Control.Applicative        ( (<$>), (<*), (*>), (<|>) )
+import Control.Applicative        ( (<$>), (<*>), (<*), (*>), (<|>) )
 import Data.Monoid
 import Data.Attoparsec.Text
 import Data.Char                  ( chr ) 
@@ -116,6 +116,13 @@ has p = option False (const True <$> p)
 ```
 
 This is almost like `maybeOption`, except that we ignore the result and instead just return `True` or `False`. 
+
+```haskell
+combineWith :: (a -> b -> c) -> Parser a -> Parser b -> Parser c
+combineWith op p q = op <$> p <*> q
+```
+
+This helper allows us to combine the results from two parsers, `Parser a` and `Parser b`, using some operation `(a -> b -> c)`.
 
 ### String
 
@@ -225,10 +232,10 @@ jsonNumber = do
 The integer part matches exactly `"0"` or a sequence of one or more digits. 
 
 ```haskell
-    fractional = char '.' *> ((:) '.' <$> many1 digit)
+    fractional = let cons = combineWith (:) 
+                  in char '.' `cons` many1 digit
 ```
 
-If no exponent is present, `pow` will get a default value of 0. 
 
 ```haskell
     exponent = do
@@ -240,7 +247,7 @@ If no exponent is present, `pow` will get a default value of 0.
           _        -> digits
 ```
 
-We then concatenate the integer and fractional parts, and multiply the result by `10 ^ pow`.
+Recall that if no exponent is present, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, and multiply the result by `10 ^ pow`.
 
 `Boolean` and `Null` values are straightforward:
 
@@ -265,7 +272,7 @@ jsonNull = "null" *> return Null
 
 ### Object
 
-Since objects and arrays are aggregate values composed of collections of the values we have already defined, these parsers will be defined very much in terms of the earlier ones. Let's first look at the diagram for the object type in JSON:
+Since objects and arrays are aggregate values composed of collections of other objects, arrays, and the values we have already defined, the following parsers will rely heavily on the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
 
 ![object](object.gif)
 
