@@ -22,7 +22,7 @@ import Data.Text                  ( Text, pack, unpack )
 import qualified Data.Map.Strict as H
 ```
 
-The following language extensions are used:
+The `OverloadedStrings` language extension is used:
 
 ```
 {-# LANGUAGE OverloadedStrings #-}
