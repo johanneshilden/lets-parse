@@ -13,8 +13,11 @@ This code is for demonstration purposes only. Don't use this parser in a real ap
 First, we need some imports.
 
 ```haskell
+import Control.Applicative        ( (<$>), (<*), (*>), (<|>) )
+import Data.Monoid
 import Data.Attoparsec.Text
-import Data.Text
+import Data.Char                  ( chr ) 
+import Data.Text                  ( Text, pack, unpack )
 
 import qualified Data.Map.Strict as H
 ```
@@ -23,7 +26,6 @@ The following language extensions are used:
 
 ```
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE LambdaCase        #-}
 ```
 
 ### JSON
@@ -209,7 +211,7 @@ Everything is optional, except the integer component.
 jsonNumber = do
     negative <- has (char '-')
     int  <- unpack <$> string "0" <|> many1 digit
-    frac <- fractional
+    frac <- option "" fractional
     pow  <- option 0 exponent
     let number = read (int <> frac) * 10 ^ pow 
     return $ Number 
@@ -219,6 +221,28 @@ jsonNumber = do
   where
     ...
 ```
+
+The integer part matches exactly `"0"` or a sequence of one or more digits. 
+
+```haskell
+    fractional = char '.' *> ((:) '.' <$> many1 digit)
+```
+
+If no exponent is present, `pow` will get a default value of 0. 
+
+```haskell
+    exponent = do
+        prefix <- oneOf "eE"
+        sign   <- maybeOption (oneOf "+-")
+        digits <- read <$> many1 digit
+        return $ case sign of
+          Just '-' -> negate digits
+          _        -> digits
+```
+
+We then concatenate the integer and fractional parts, and multiply the result by `10 ^ pow`.
+
+`Boolean` and `Null` values are straightforward:
 
 ### Boolean
 
@@ -241,9 +265,13 @@ jsonNull = "null" *> return Null
 
 ### Object
 
+Since objects and arrays are aggregate values composed of collections of the values we have already defined, these parsers will be defined very much in terms of the earlier ones. Let's first look at the diagram for the object type in JSON:
+
 ![object](object.gif)
 
 > Image from [json.org](http://json.org/).
+
+A single key-value pair can then be defined as:
 
 ```haskell
 keyValuePair :: Parser (Text, Json)
@@ -297,6 +325,8 @@ jsonArray = do
   where
     value = padded jsonValue
 ```
+
+More compactly, we can write this as
 
 ```haskell
 jsonArray = let values = padded jsonValue `sepBy` char ',' 
