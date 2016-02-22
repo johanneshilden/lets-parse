@@ -122,6 +122,9 @@ testInput = do
     parseMatch json "  [{  \"key\": 1.235   }, false, {\"key\":  \"value\"} , {\"key\": 1.235   }, null, false, true, 1, {}, 123 ]"
     parseMatch json "  []"
     parseMatch json "  null"
+    parseMatch json "{ \"Image\": { \"Width\":  800, \"Height\": 600, \"Title\":  \"View from 15th Floor\", \"Thumbnail\": { \"Url\":    \"http://www.example.com/image/481989943\", \"Height\": 125, \"Width\":  100 }, \"Animated\" : false, \"IDs\": [116, 943, 234, 38793] } }"
+    parseMatch json "[ { \"precision\": \"zip\", \"Latitude\":  37.7668, \"Longitude\": -122.3959, \"Address\":   \"\", \"City\":      \"SAN FRANCISCO\", \"State\":     \"CA\", \"Zip\":       \"94107\", \"Country\":   \"US\" }, { \"precision\": \"zip\", \"Latitude\":  37.371991, \"Longitude\": -122.026020, \"Address\":   \"\", \"City\":      \"SUNNYVALE\", \"State\":     \"CA\", \"Zip\":       \"94085\", \"Country\":   \"US\" } ]"
+
     --
     parseFail  json "xxx"
 
