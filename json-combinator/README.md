@@ -348,3 +348,8 @@ More compactly, we can write this as
 jsonArray = let values = padded jsonValue `sepBy` char ',' 
              in char '[' *> (Array <$> values) <* char ']'
 ```
+
+### References
+
+* [json.org](http://json.org)
+* [rfc7159.net/rfc7159](http://rfc7159.net/rfc7159)
