@@ -108,6 +108,13 @@ maybeOption p = option Nothing (Just <$> p)
 
 This function returns the result of running some action, wrapped in a `Maybe` type, i.e., `Nothing` if the parser fails without consuming input, and otherwise `Just` the result.
 
+```haskell
+has :: Parser a -> Parser Bool
+has p = option False (const True <$> p)
+```
+
+This is almost like `maybeOption`, except that we ignore the result and instead just return `True` or `False`. 
+
 ### String
 
 ![string](string.gif)
@@ -200,14 +207,15 @@ Everything is optional, except the integer component.
 
 ```haskell
 jsonNumber = do
-    sign <- maybeOption (char '-')
-    int  <- return <$> char '0' <|> many1 digit
+    negative <- has (char '-')
+    int  <- unpack <$> string "0" <|> many1 digit
     frac <- fractional
     pow  <- option 0 exponent
-    let digits = read (int <> frac) * 10 ^ pow 
-    return $ Number $ case sign of
-      Nothing -> digits
-      Just _  -> negate digits
+    let number = read (int <> frac) * 10 ^ pow 
+    return $ Number 
+           $ if negative 
+                then negate number 
+                else number
   where
     ...
 ```
