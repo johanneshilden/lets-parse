@@ -45,7 +45,7 @@ We will need [combinators](https://en.wikipedia.org/wiki/Combinatory_logic#Combi
 jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue :: Parser Json
 ```
 
-The top-level value parser is the easiest to implement since it, by definition, should match exactly on of the other types.
+The top-level value parser is the easiest to implement since it, by definition, should match exactly one of the other types.
 
 ```haskell
 jsonValue = jsonObject
