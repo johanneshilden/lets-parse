@@ -30,7 +30,7 @@ has :: Parser a -> Parser Bool
 has p = option False (const True <$> p)
 
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
-manyEnclosedIn parser encl = encl *> manyTill parser encl
+manyEnclosedIn parser fence = fence *> manyTill parser fence
 
 padded :: Parser a -> Parser a
 padded parser = skipSpace *> parser <* skipSpace
