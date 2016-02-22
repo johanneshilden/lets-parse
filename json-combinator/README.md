@@ -39,7 +39,7 @@ Most of this is straightforward. Each data constructor represents a track in the
 type Dictionary = H.Map Text Json
 ```
 
-We will need combinators to parse each of these separately.
+We will need [combinators](https://en.wikipedia.org/wiki/Combinatory_logic#Combinatory_terms) to parse each of these separately.
 
 ```haskell
 jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, jsonValue :: Parser Json
