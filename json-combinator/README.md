@@ -174,7 +174,7 @@ These are the escaped control characters (`\` followed by any of `"\/bfnrt`).
 
 (The `OverloadedStrings` extension allows us to write `"\\u"` instead of `string "\\u"` here.)
 
-The format of a Unicode character escape sequence is `\u` followed by four hexadecimal digits. We also define `hexDigit` to match a single valid hexadecimal digit.
+The format of a Unicode character escape sequence is `\u` followed by four hexadecimal digits. We need `hexDigit` to match a single valid hexadecimal digit, implemented as:
 
 ```haskell
     hexDigit = oneOf "0123456789abcdefABCDEF"
