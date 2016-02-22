@@ -2,9 +2,9 @@
 module Fri.Json.Parser where
 
 import Control.Applicative        ( (<$>), (<*>), (<*), (*>), (<|>) )
-import Data.Monoid
 import Data.Attoparsec.Text
 import Data.Char                  ( chr ) 
+import Data.Monoid                ( (<>) )
 import Data.Text                  ( Text, pack, unpack )
 
 import qualified Data.Map.Strict as H
