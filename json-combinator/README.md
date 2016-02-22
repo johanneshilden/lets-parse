@@ -200,7 +200,7 @@ fmap String literal :: Parser Json
 
 ### Number
 
-Numbers are slightly trickier. In particular, we need to consider scientific notation (standard form) and make sure that a number does not start with a zero unless it has a decimal point or is exactly 0 (i.e., things like 0003 shouldn't parse). Octal and hexadecimal numbers are not supported in JSON.
+Numbers are slightly trickier. In particular, we need to consider [scientific notation](https://en.wikipedia.org/wiki/Scientific_notation) (standard form) and make sure that a number does not start with a zero unless it has a decimal point or is exactly 0 (i.e., things like 0003 shouldn't parse). Octal and hexadecimal numbers are not supported in JSON.
 
 ![number](number.gif)
 
