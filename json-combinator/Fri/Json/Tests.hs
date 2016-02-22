@@ -36,7 +36,7 @@ testStrings = do
     --
     parseMatch jsonString "\"hello\""
     parseMatch jsonString "\"h\\u1234ello\""
-    parseMatch jsonString "\"h\\u1234e\nl\rlo\""
+    parseMatch jsonString "\"h\\u1234e\\nl\\rlo\""
     parseMatch jsonString "\"\""
     --
     parseFail  jsonString "xxx"
