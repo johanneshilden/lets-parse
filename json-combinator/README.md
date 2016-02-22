@@ -1,6 +1,10 @@
 This library is an example of how combinator parsing works in Haskell. 
 
-> This code is for demonstration purposes only. Don't use this parser in a real application. You may instead want to have a look at [Aeson](https://hackage.haskell.org/package/aeson) for a mature, efficient and well-maintained JSON parsing library.
+> In functional programming, parser combinators can be used to combine basic parsers to construct parsers for more complex rules.
+
+(From the [Wikipedia page](https://en.wikipedia.org/wiki/Parser_combinator) on parser combinators.)
+
+This code is for demonstration purposes only. Don't use this parser in a real application. You may instead want to have a look at [Aeson](https://hackage.haskell.org/package/aeson) for a mature, efficient and well-maintained JSON parsing library.
 
 ```
   build-depends:       base >=4.6, attoparsec >=0.13, text, containers
