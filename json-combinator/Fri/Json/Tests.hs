@@ -1,5 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Fri.Json.Tests where
+module Fri.Json.Tests 
+  ( runTests
+  ) where
 
 import Data.Attoparsec.Text
 import Data.Text                  ( Text, pack, unpack )
@@ -54,6 +56,7 @@ testNumbers = do
     parseMatch jsonArray  "[1,2,3,0.01e8]"    
     parseMatch jsonArray  "[1,2,3,0.01e+8]"    
     parseMatch jsonArray  "[1,2,3,0.01e-8]"    
+    parseMatch jsonObject "{\"a\": 123}" 
     --
     parseFail  jsonNumber ".123213"
     parseFail  jsonNumber "-.123213"
@@ -63,6 +66,8 @@ testNumbers = do
     parseFail  jsonArray  "[1,2,3,0.01e+]"    
     parseFail  jsonNumber "- 3"
     parseFail  jsonNumber "--3"
+    parseFail  jsonObject "{\"a\": 0123}" 
+    parseFail  jsonObject "{\"a\": 00}" 
 
 testBoolean = do
     --
@@ -135,7 +140,7 @@ testResults = do
       Done _ (Object map) -> do 
         assertKey "first"  map (Number 1.5)
         assertKey "second" map (Boolean True)
-        assertKey "third"  map (Null)
+        assertKey "third"  map Null
         assertKey "fourth" map (String "some_value")
       _ -> error "Unexpected result."
     let result' = parse json "  {\"false\": false , \"true\"  : true }"

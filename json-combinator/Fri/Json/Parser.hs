@@ -1,10 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE LambdaCase        #-}
 module Fri.Json.Parser where
 
-import Control.Applicative        ( (<$>), (<*), (*>), (<|>) )
+import Control.Applicative        ( (<$>), (<*>), (<*), (*>), (<|>) )
 import Data.Monoid
-import Data.Attoparsec.Combinator ( lookAhead )
 import Data.Attoparsec.Text
 import Data.Char                  ( chr ) 
 import Data.Text                  ( Text, pack, unpack )
@@ -28,6 +26,9 @@ oneOf = satisfy . inClass
 maybeOption :: Parser a -> Parser (Maybe a)
 maybeOption p = option Nothing (Just <$> p)
 
+has :: Parser a -> Parser Bool
+has p = option False (const True <$> p)
+
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
 manyEnclosedIn parser encl = encl *> manyTill parser encl
 
@@ -47,7 +48,7 @@ literal = pack <$> validChar `manyEnclosedIn` char '"'
     -- Unicode escape sequence
     unicode :: Parser Char
     unicode = do
-        string "\\u"
+        "\\u"
         code <- count 4 hexDigit
         return $ chr $ read $ "0x" ++ code
     -- A single hexadecimal digit
@@ -60,20 +61,18 @@ jsonString = String <$> literal
 
 -- | Decode a JSON number.
 jsonNumber = do
-    sign <- maybeOption (char '-')
-    int  <- return <$> char '0' <|> many1 digit
-    frac <- fractional
+    negative <- has (char '-')
+    int  <- unpack <$> "0" <|> many1 digit
+    frac <- option "" fractional
     pow  <- option 0 exponent
-    let digits = read (int <> frac) * 10 ^ pow 
-    return $ Number $ case sign of
-      Nothing -> digits
-      Just _  -> negate digits
+    let number = read (int <> frac) * 10 ^ pow 
+    return $ Number 
+           $ if negative 
+                then negate number 
+                else number
   where
     -- Fractional part
-    fractional = maybeOption (char '.') 
-        >>= \case 
-          Nothing -> return []
-          Just _  -> many1 digit >>= return <$> (:) '.'
+    fractional = (:) <$> char '.' <*> many1 digit
     -- Exponent (scientific notation)
     exponent = do
         prefix <- oneOf "eE"
