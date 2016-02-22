@@ -115,7 +115,7 @@ has :: Parser a -> Parser Bool
 has p = option False (const True <$> p)
 ```
 
-This is almost like `maybeOption`, except that we ignore the result and instead just return `True` or `False`. 
+This is almost like `maybeOption`, except that we ignore the result and instead return `True` or `False`. 
 
 ### String
 
