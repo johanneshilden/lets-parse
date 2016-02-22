@@ -62,7 +62,7 @@ Unsurprisingly, this type looks very similar to the railroad diagram above from 
 
 > Whitespace can be inserted between any pair of tokens. 
 
-To make sure that we allow whitespace characters before the actual value being parsed, I am going to wrap the `jsonValue` parser in another function which will serve as the main API for the library.
+To make sure that we allow whitespace characters before the actual value being parsed, I am therefore going to wrap the `jsonValue` parser in another function which will serve as the main API for the library.
 
 ```haskell
 -- | Decode JSON data with possible leading blank space.
@@ -79,15 +79,21 @@ padded parser = skipSpace *> parser <* skipSpace
 
 ### Some more helpers
 
+We also define some helpers that will be used later.
+
 ```haskell
 oneOf :: String -> Parser Char
 oneOf = satisfy . inClass
 ```
 
+This parser will accept any character in the provided `String`.
+
 ```haskell
 maybeOption :: Parser a -> Parser (Maybe a)
 maybeOption p = option Nothing (Just <$> p)
 ```
+
+This function returns the result of running some action, wrapped in a `Maybe` type, i.e., `Nothing` if the parser fails without consuming input, and otherwise `Just` the result.
 
 ### String
 
@@ -169,8 +175,26 @@ Numbers are slightly trickier. In particular, we need to consider scientific not
 
 > Image from [json.org](http://json.org/).
 
+Conceptually, we can divide the number parser up into four parts:
+
 ```
-[-] (integral part) (fractional part) (exponential part)
+[-] (integral part) [fractional part] [exponential part]
+```
+
+Everything is optional, except the integer component.
+
+```haskell
+jsonNumber = do
+    sign <- maybeOption (char '-')
+    int  <- return <$> char '0' <|> many1 digit
+    frac <- fractional
+    pow  <- option 0 exponent
+    let digits = read (int <> frac) * 10 ^ pow 
+    return $ Number $ case sign of
+      Nothing -> digits
+      Just _  -> negate digits
+  where
+    ...
 ```
 
 ### Boolean
