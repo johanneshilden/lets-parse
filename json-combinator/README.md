@@ -103,6 +103,8 @@ This function returns the result of running some action, wrapped in a `Maybe` ty
 
 A string literal is a (possibly empty) sequence of Unicode characters of valid type, enclosed in quotes. (We are not going to worry about what *valid character* means right now.) To make things easier, we can define a function which will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input.
 
+> `manyTill p` end applies action `p` zero or more times until action end succeeds, and returns the list of values returned by `p`.
+
 ```haskell
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
 manyEnclosedIn parser encl = encl *> manyTill parser encl
