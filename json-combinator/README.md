@@ -129,7 +129,7 @@ A string literal is a (possibly empty) sequence of Unicode characters of valid t
 
 ```haskell
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
-manyEnclosedIn parser encl = encl *> manyTill parser encl
+manyEnclosedIn parser fence = fence *> manyTill parser fence
 ```
 
 We can now define the string parser in terms of `manyEnclosedIn`.
