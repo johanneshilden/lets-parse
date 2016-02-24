@@ -65,7 +65,7 @@ jsonNumber = do
     int  <- unpack <$> "0" <|> many1 digit
     frac <- option "" fractional
     pow  <- option 0 exponent
-    let number = read (int <> frac) * 10 ^ pow 
+    let number = read (int <> frac) * 10 ** pow 
     return $ Number 
            $ if negative 
                 then negate number 
