@@ -48,7 +48,7 @@ data Json = Object  !Dictionary
     deriving (Show, Eq)
 ```
 
-Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor that accepts a native `Bool` as its argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
+Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor which takes a native `Bool` argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries:
 
 ```haskell
 type Dictionary = H.Map Text Json
@@ -77,7 +77,7 @@ Unsurprisingly, this type looks very similar to the railroad diagram above from 
 
 > Whitespace can be inserted between any pair of tokens. 
 
-We want to allow whitespace characters inserted before the actual value being parsed. I am therefore going to wrap the `jsonValue` parser in another function which will serve as the main API for the library.
+We want to allow whitespace characters inserted before the actual value being parsed. I am therefore going to wrap the `jsonValue` parser in another function which will serve as the main API for our library.
 
 ```haskell
 -- | Decode JSON data, ignoring leading blank space.
@@ -85,7 +85,7 @@ json :: Parser Json
 json = skipSpace *> jsonValue 
 ```
 
-It is also useful to introduce a simple helper that translates a parser to one which ignores whitespace characters on both sides of the input.
+It is also useful to introduce a simple helper to transform a parser into one which will ignore whitespace characters on both sides of the input.
 
 ```haskell
 padded :: Parser a -> Parser a
@@ -123,16 +123,18 @@ This is almost like `maybeOption`, except that we ignore the result and instead 
 
 > Image from [json.org](http://json.org/).
 
-A string literal is a (possibly empty) sequence of Unicode characters of valid type, enclosed in quotes. (We are not going to worry about what *valid character* means right now.) To make things easier, we can define a function which will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input.
+A string literal is a (possibly empty) sequence of Unicode characters of valid type, enclosed in quotes. (We are not going to worry about what *valid character* means right now.) Attoparsec defines `manyTill`, which works in the following way:
 
 > `manyTill p` end applies action `p` zero or more times until action end succeeds, and returns the list of values returned by `p`.
+
+We can now define a function that will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input:
 
 ```haskell
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
 manyEnclosedIn parser fence = fence *> manyTill parser fence
 ```
 
-We can now define the string parser in terms of `manyEnclosedIn`.
+The string parser is defined in terms of `manyEnclosedIn`.
 
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
@@ -248,7 +250,7 @@ The [BNF grammar](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form) for th
           _        -> digits
 ```
 
-Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, [read](https://hackage.haskell.org/package/base/docs/Prelude.html#v:read) the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is then negated if `negative` is `True`, i.e., when a minus sign is present. Below is the relevant part of the code again.
+Recall that if no exponent is involved, `pow` will get a default value of 0. We can then concatenate the integer and fractional parts, [read](https://hackage.haskell.org/package/base/docs/Prelude.html#v:read) the result to a `Double`, and then multiply this value by `10 ^ pow`. This value is finally negated if `negative` is `True`, i.e., when a minus sign is present. Below is the relevant part of the code again.
 
 ```haskell
     let number = read (int <> frac) * 10 ^ pow 
@@ -258,9 +260,9 @@ Recall that if no exponent is involved, `pow` will get a default value of 0. We 
                 else number
 ```
                 
-`Boolean` and `Null` values are straightforward:
-
 ### Boolean
+
+`Boolean` and `Null` values are straightforward:
 
 ```haskell
 -- | Decode a boolean.
@@ -281,7 +283,7 @@ jsonNull = "null" *> return Null
 
 ### Object
 
-Since objects and arrays are aggregate values composed of collections of other objects, arrays, together with the values we have already defined, the following parsers will rely heavily on the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
+Since objects and arrays are aggregate values composed of collections of other objects, arrays, together with the values we have already defined, the following parsers will build on top of the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
 
 ![object](object.gif)
 
@@ -298,6 +300,10 @@ keyValuePair = do
     return (key, value)
 ```
 
+Wrapping the key-value pair parser in the `padded` helper we defined earlier to accommodate for any whitespace, we can match a JSON object by applying the `sepBy` combinator to the result.
+
+> `sepBy p sep` applies zero or more occurrences of `p`, separated by `sep`. Returns a list of the values returned by `p`.
+
 ```haskell
 jsonObject :: Parser Json
 jsonObject = do
@@ -308,6 +314,8 @@ jsonObject = do
   where
     keyValuePair = ...            -- See above
 ```
+
+The `do`-notation is not really needed here. Instead, I prefer to write:
 
 ```haskell
 -- | Decode a JSON object.
@@ -328,7 +336,7 @@ jsonObject = char '{' *> pairs <* char '}'
 
 > Image from [json.org](http://json.org/).
 
-Using `do`-notation, this could look something like the following.
+For arrays, we apply the same technique. An array is a list of (possibly whitespace padded) values, separated by commas. Using `do`-notation, this could look something like the following.
 
 ```haskell
 -- | Decode a JSON array.
@@ -342,12 +350,143 @@ jsonArray = do
     value = padded jsonValue
 ```
 
-More compactly, we can write this as
+More compactly, we can write this as:
 
 ```haskell
 jsonArray = let values = padded jsonValue `sepBy` char ',' 
              in char '[' *> (Array <$> values) <* char ']'
 ```
+
+Here is what the entire module looks like:
+
+```haskell
+{-# LANGUAGE OverloadedStrings #-}
+module Fri.Json.Parser where
+
+import Control.Applicative        ( (<$>), (<*>), (<*), (*>), (<|>) )
+import Data.Attoparsec.Text
+import Data.Char                  ( chr ) 
+import Data.Monoid                ( (<>) )
+import Data.Text                  ( Text, pack, unpack )
+
+import qualified Data.Map.Strict as H
+
+type Dictionary = H.Map Text Json
+
+-- | Data type to represent a JSON value.
+data Json = Object  !Dictionary  
+          | Array   ![Json]  
+          | Number  !Double 
+          | String  !Text        
+          | Boolean !Bool  
+          | Null
+    deriving (Show, Eq)
+
+--
+-- Various helpers
+--
+
+oneOf :: String -> Parser Char
+oneOf = satisfy . inClass
+
+maybeOption :: Parser a -> Parser (Maybe a)
+maybeOption p = option Nothing (Just <$> p)
+
+has :: Parser a -> Parser Bool
+has p = option False (const True <$> p)
+
+manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
+manyEnclosedIn parser fence = fence *> manyTill parser fence
+
+padded :: Parser a -> Parser a
+padded parser = skipSpace *> parser <* skipSpace
+
+-- | Parse a string literal, i.e., zero or more characters enclosed in 
+--   double quotes.
+literal :: Parser Text
+literal = pack <$> validChar `manyEnclosedIn` char '"' 
+  where
+    validChar = special 
+            <|> unicode 
+            <|> notChar '\\'
+    -- Escaped special character
+    special = char '\\' *> oneOf "\"\\/bfnrt"
+    -- Unicode escape sequence
+    unicode :: Parser Char
+    unicode = do
+        "\\u"
+        code <- count 4 hexDigit
+        return $ chr $ read $ "0x" ++ code
+    -- A single hexadecimal digit
+    hexDigit = oneOf "0123456789abcdefABCDEF"
+
+jsonString, jsonNumber, jsonBoolean, jsonNull, jsonObject, jsonArray, json, jsonValue :: Parser Json
+
+-- | Decode a JSON string literal.
+jsonString = String <$> literal 
+
+-- | Decode a JSON number.
+jsonNumber = do
+    negative <- has (char '-')
+    int  <- unpack <$> "0" <|> many1 digit
+    frac <- option "" fractional
+    pow  <- option 0 exponent
+    let number = read (int <> frac) * 10 ^ pow 
+    return $ Number 
+           $ if negative 
+                then negate number 
+                else number
+  where
+    -- Fractional part
+    fractional = (:) <$> char '.' <*> many1 digit
+    -- Exponent (scientific notation)
+    exponent = do
+        prefix <- oneOf "eE"
+        sign   <- maybeOption (oneOf "+-")
+        digits <- read <$> many1 digit
+        return $ case sign of
+          Just '-' -> negate digits
+          _        -> digits
+
+-- | Decode a boolean.
+jsonBoolean = true <|> false
+  where
+    true  = "true"  *> return (Boolean True)
+    false = "false" *> return (Boolean False)
+
+-- | Decode a null value.
+jsonNull = "null" *> return Null
+
+-- | Decode a JSON object.
+jsonObject = char '{' *> pairs <* char '}'
+  where
+    pairs = Object . H.fromList <$> padded keyValuePair `sepBy` char ','
+    keyValuePair :: Parser (Text, Json)
+    keyValuePair = do
+        key <- literal
+        padded (char ':')
+        value <- jsonValue
+        return (key, value)
+
+-- | Decode a JSON array.
+jsonArray = let values = padded jsonValue `sepBy` char ',' 
+             in char '[' *> (Array <$> values) <* char ']'
+
+-- | Decode a JSON value.
+jsonValue = jsonObject
+        <|> jsonArray
+        <|> jsonNumber
+        <|> jsonString
+        <|> jsonBoolean
+        <|> jsonNull
+
+-- | Decode JSON data with possible leading blank space.
+json = skipSpace *> jsonValue 
+```
+
+### Tests
+
+
 
 ### References
 
