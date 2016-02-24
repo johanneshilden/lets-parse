@@ -374,8 +374,12 @@ import qualified Data.Map.Strict as H
 type Dictionary = H.Map Text Json
 
 -- | Data type to represent a JSON value.
-data Json = Object !Dictionary  | Array ![Json]  | Number !Double 
-          | String !Text        | Boolean !Bool  | Null
+data Json = Object  !Dictionary  
+          | Array   ![Json]  
+          | Number  !Double 
+          | String  !Text        
+          | Boolean !Bool  
+          | Null
     deriving (Show, Eq)
 
 --
