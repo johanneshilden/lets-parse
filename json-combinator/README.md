@@ -300,7 +300,7 @@ keyValuePair = do
     return (key, value)
 ```
 
-Wrapping the key-value pair parser in the `padded` helper we defined earlier, to accommodate for any whitespace, we can match a JSON object by applying the `sepBy` combinator to the result.
+Wrapping the key-value pair parser in the `padded` helper we defined earlier to accommodate for any whitespace, we can match a JSON object by applying the `sepBy` combinator to the result.
 
 > `sepBy p sep` applies zero or more occurrences of `p`, separated by `sep`. Returns a list of the values returned by `p`.
 
