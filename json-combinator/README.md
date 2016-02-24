@@ -77,7 +77,7 @@ Unsurprisingly, this type looks very similar to the railroad diagram above from 
 
 > Whitespace can be inserted between any pair of tokens. 
 
-We want to allow whitespace characters inserted before the actual value being parsed. I am therefore going to wrap the `jsonValue` parser in another function which will serve as the main API for the library.
+We want to allow whitespace characters inserted before the actual value being parsed. I am therefore going to wrap the `jsonValue` parser in another function which will serve as the main API for our library.
 
 ```haskell
 -- | Decode JSON data, ignoring leading blank space.
@@ -85,7 +85,7 @@ json :: Parser Json
 json = skipSpace *> jsonValue 
 ```
 
-It is also useful to introduce a simple helper that translates a parser to one which ignores whitespace characters on both sides of the input.
+It is also useful to introduce a simple helper to transform a parser into one which will ignore whitespace characters on both sides of the input.
 
 ```haskell
 padded :: Parser a -> Parser a
@@ -127,14 +127,14 @@ A string literal is a (possibly empty) sequence of Unicode characters of valid t
 
 > `manyTill p` end applies action `p` zero or more times until action end succeeds, and returns the list of values returned by `p`.
 
-We can now define a function which will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input:
+We can now define a function that will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input:
 
 ```haskell
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
 manyEnclosedIn parser fence = fence *> manyTill parser fence
 ```
 
-We can now define the string parser in terms of `manyEnclosedIn`.
+The string parser is defined in terms of `manyEnclosedIn`.
 
 ```haskell
 -- | Parse a string literal, i.e., zero or more characters enclosed in double quotes.
