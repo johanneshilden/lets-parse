@@ -48,7 +48,7 @@ data Json = Object  !Dictionary
     deriving (Show, Eq)
 ```
 
-Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor which takes a native `Bool` argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries, defined as
+Most of this is straightforward. Each data constructor represents a track in the above diagram, except for Boolean, since it makes sense to combine *true* and *false* into a single constructor which takes a native `Bool` argument. `Dictionary` is a type synonym for a `Map` with `Text` keys and JSON value entries:
 
 ```haskell
 type Dictionary = H.Map Text Json
@@ -123,11 +123,11 @@ This is almost like `maybeOption`, except that we ignore the result and instead 
 
 > Image from [json.org](http://json.org/).
 
-A string literal is a (possibly empty) sequence of Unicode characters of valid type, enclosed in quotes. (We are not going to worry about what *valid character* means right now.) 
+A string literal is a (possibly empty) sequence of Unicode characters of valid type, enclosed in quotes. (We are not going to worry about what *valid character* means right now.) Attoparsec defines `manyTill`, which works in the following way:
 
 > `manyTill p` end applies action `p` zero or more times until action end succeeds, and returns the list of values returned by `p`.
 
-To make things easier, we can define a function which will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input.
+We can now define a function which will behave similar to `manyTill`, except that it is necessary to satisfy the provided parser both at the beginning and at the end of the input:
 
 ```haskell
 manyEnclosedIn :: Parser a -> Parser b -> Parser [a] 
@@ -283,7 +283,7 @@ jsonNull = "null" *> return Null
 
 ### Object
 
-Since objects and arrays are aggregate values composed of collections of other objects, arrays, together with the values we have already defined, the following parsers will rely heavily on the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
+Since objects and arrays are aggregate values composed of collections of other objects, arrays, together with the values we have already defined, the following parsers will build on top of the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
 
 ![object](object.gif)
 
@@ -299,6 +299,10 @@ keyValuePair = do
     value <- jsonValue
     return (key, value)
 ```
+
+Wrapping the key-value pair parser in the `padded` helper we defined earlier, to accommodate for any whitespace, we can match a JSON object by applying the `sepBy` combinator to the result.
+
+> `sepBy p sep` applies zero or more occurrences of `p`, separated by `sep`. Returns a list of the values returned by `p`.
 
 ```haskell
 jsonObject :: Parser Json
