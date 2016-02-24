@@ -315,6 +315,8 @@ jsonObject = do
     keyValuePair = ...            -- See above
 ```
 
+The `do`-notation is not really needed here. Instead, I prefer to write:
+
 ```haskell
 -- | Decode a JSON object.
 jsonObject :: Parser Json
@@ -334,7 +336,7 @@ jsonObject = char '{' *> pairs <* char '}'
 
 > Image from [json.org](http://json.org/).
 
-Using `do`-notation, this could look something like the following.
+For arrays, we apply the same technique. An array is a list of (possibly whitespace padded) values, separated by commas. Using `do`-notation, this could look something like the following.
 
 ```haskell
 -- | Decode a JSON array.
@@ -348,7 +350,7 @@ jsonArray = do
     value = padded jsonValue
 ```
 
-More compactly, we can write this as
+More compactly, we can write this as:
 
 ```haskell
 jsonArray = let values = padded jsonValue `sepBy` char ',' 
