@@ -260,9 +260,9 @@ Recall that if no exponent is involved, `pow` will get a default value of 0. We 
                 else number
 ```
                 
-`Boolean` and `Null` values are straightforward:
-
 ### Boolean
+
+`Boolean` and `Null` values are straightforward:
 
 ```haskell
 -- | Decode a boolean.
