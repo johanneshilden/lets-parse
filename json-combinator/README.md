@@ -283,7 +283,7 @@ jsonNull = "null" *> return Null
 
 ### Object
 
-Since objects and arrays are aggregate values composed of collections of other objects, arrays, together with the values we have already defined, the following parsers will build on top of the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
+Since objects and arrays are aggregate values composed of collections of other objects and arrays, together with the values we have already defined, the following parsers will build on top of the `jsonValue` parser. Let's first look at the diagram for the object type in JSON:
 
 ![object](object.gif)
 
