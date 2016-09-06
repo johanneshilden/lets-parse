@@ -21,7 +21,7 @@ data Term =
 
 This is what we will use as the underlying type for our parser. 
 
-```
+```haskell
 term :: Parser PTerm
 ```
 
