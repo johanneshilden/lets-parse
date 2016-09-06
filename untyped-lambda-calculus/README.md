@@ -31,8 +31,11 @@ Some famous expressions in the lambda calculus are
 ```haskell
 Lam "x" (Var "x")
 ```
-* the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
-* the Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
+* the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); 
+```haskell
+Lam "f" (App (Lam "x" (App (Var "f") (App (Var "x") (Var "x")))) (Lam "x" (App (Var "f") (App (Var "x") (Var "x")))))
+```
+* and the Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
 ```haskell
 [ Lam "f" (Lam "x" (App (Var "f") (Var "x")))
 , Lam "f" (Lam "x" (App (Var "f") (App (Var "f") (Var "x"))))
