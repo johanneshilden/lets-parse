@@ -5,7 +5,7 @@ In the untyped λ calculus, a term is one of three things:
 
 * A variable (x) is a term;
 * Application of two terms (M N) is a term;
-* A lambda abstraction is a term (\x.M).
+* A lambda abstraction is a term (λx.M).
 
 ```haskell
 data PTerm =
