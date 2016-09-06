@@ -40,3 +40,5 @@ Lam "x" (Var "x")
 ```
 
 Later we will look at translation of these values into other, intermediate representation forms, more suitable for evaluation.
+
+https://en.wikipedia.org/wiki/De_Bruijn_index
