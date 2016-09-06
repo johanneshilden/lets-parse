@@ -1,5 +1,13 @@
 
-Untyped Lambda Calculus interpreter.
+Untyped Lambda Calculus parser and interpreter.
+
+In the untyped λ calculus, a term is one of three things:
+
+```
+v 
+M N
+\x.M
+```
 
 ```haskell
 data PTerm =
