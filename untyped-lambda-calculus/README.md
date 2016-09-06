@@ -3,7 +3,9 @@ Untyped Lambda Calculus parser and interpreter.
 
 In the untyped λ calculus, a term is one of three things:
 
-* A variable (x) is a term;
+Let Λ denote the set of terms, and V the set of variables.
+
+* A variable (x) is a term; x ∈ V ⇒ x ∈ ∈
 * Application of two terms (M N) is a term;
 * A lambda abstraction is a term (λx.M).
 
