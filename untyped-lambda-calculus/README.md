@@ -19,7 +19,13 @@ data Term =
   deriving (Show, Eq)
 ```
 
-This is what we will use as the underlying type for our parser. Later we will look at other intermediate forms, more suitable for evaluation.
+This is what we will use as the underlying type for our parser. 
+
+```
+term :: Parser PTerm
+```
+
+Later we will look at other intermediate representation forms, more suitable for evaluation.
 
 Some famous expressions in the lambda calculus are 
 
