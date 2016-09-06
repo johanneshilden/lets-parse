@@ -9,7 +9,7 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 
 Nothing else is a term.
 
-Here is how one typically represents a term in Haskell, using an algebraic data type:
+Here is how one typically represents lambda terms in Haskell, using an algebraic data type:
 
 ```haskell
 data Term =
@@ -19,7 +19,7 @@ data Term =
   deriving (Show, Eq)
 ```
 
-Some famous terms in the lambda calculus are 
+Some famous expressions in the lambda calculus are 
 
 * the identity function (λx.x);
 * the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
@@ -28,5 +28,7 @@ Some famous terms in the lambda calculus are
 ```haskell
 Lam "x" (Var "x")
 
-[Lam "f" (Lam "x" (App (Var "f") (Var "x"))), Lam "f" (Lam "x" (App (Var "f") (App (Var "f") (Var "x")))), ...]
+[ Lam "f" (Lam "x" (App (Var "f") (Var "x")))
+, Lam "f" (Lam "x" (App (Var "f") (App (Var "f") (Var "x"))))
+, ...]
 ```
