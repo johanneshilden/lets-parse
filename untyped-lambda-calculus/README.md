@@ -39,4 +39,4 @@ Lam "x" (Var "x")
 , ... ]
 ```
 
-Later we will look at translating values of this type into other, intermediate representation forms, more suitable for evaluation.
+Later we will look at translation of these values into other, intermediate representation forms, more suitable for evaluation.
