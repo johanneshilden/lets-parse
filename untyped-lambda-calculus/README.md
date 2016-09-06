@@ -17,8 +17,8 @@ data PTerm =
   deriving (Show, Eq)
 ```
 
-Some famous terms in the λ calculus are the
+Some famous terms in the λ calculus are 
 
-* identity function (λx.x);
-* Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
-* Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
+* the identity function (λx.x);
+* the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
+* the Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
