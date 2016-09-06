@@ -33,7 +33,8 @@ Lam "x" (Var "x")
 ```
 * the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); 
 ```haskell
-Lam "f" (App (Lam "x" (App (Var "f") (App (Var "x") (Var "x")))) (Lam "x" (App (Var "f") (App (Var "x") (Var "x")))))
+Lam "f" (App (Lam "x" (App (Var "f") (App (Var "x") (Var "x")))) 
+             (Lam "x" (App (Var "f") (App (Var "x") (Var "x")))))
 ```
 * and the Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
 ```haskell
