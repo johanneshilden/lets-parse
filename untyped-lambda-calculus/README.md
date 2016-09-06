@@ -22,12 +22,11 @@ data Term =
 Some famous expressions in the lambda calculus are 
 
 * the identity function (λx.x);
-* the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
-* the Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
-
 ```haskell
 Lam "x" (Var "x")
-
+```
+* the Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
+* the Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
 [ Lam "f" (Lam "x" (App (Var "f") (Var "x")))
 , Lam "f" (Lam "x" (App (Var "f") (App (Var "f") (Var "x"))))
 , ...]
