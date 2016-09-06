@@ -13,9 +13,9 @@ Here is how we can represent a term in Haskell, using an algebraic data type:
 
 ```haskell
 data PTerm =
-    PLam T.Text PTerm        -- Lambda abstraction
-  | PVar T.Text              -- Variable
+    PVar T.Text              -- Variable
   | PApp PTerm PTerm         -- Application
+  | PLam T.Text PTerm        -- Lambda abstraction
   deriving (Show, Eq)
 ```
 
