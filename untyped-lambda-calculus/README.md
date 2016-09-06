@@ -22,10 +22,8 @@ data Term =
 This is what we will use as the underlying type for our parser. 
 
 ```haskell
-term :: Parser PTerm
+term :: Parser Term
 ```
-
-Later we will look at other intermediate representation forms, more suitable for evaluation.
 
 Some famous expressions in the lambda calculus are 
 
@@ -40,3 +38,5 @@ Lam "x" (Var "x")
 , Lam "f" (Lam "x" (App (Var "f") (App (Var "f") (Var "x"))))
 , ... ]
 ```
+
+Later we will look at translating values of this type into other, intermediate representation forms, more suitable for evaluation.
