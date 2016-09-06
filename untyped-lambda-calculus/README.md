@@ -15,7 +15,7 @@ Here is how we can represent a term in Haskell, using an algebraic data type:
 data Term =
     Var T.Text              -- Variable
   | App Term Term           -- Application
-  | Lam T.Text Term        -- Lambda abstraction
+  | Lam T.Text Term         -- Lambda abstraction
   deriving (Show, Eq)
 ```
 
