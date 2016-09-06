@@ -4,8 +4,10 @@ Untyped Lambda Calculus parser and interpreter.
 In the untyped λ calculus, a term is one of three things. Let T denote the set of terms, and X an infinite set of variables {x, y, z, ...}. Then,
 
 * A variable is a term; x ∈ X ⇒ x ∈ T;
-* Application of two terms is a term; M, N ∈ T ⇒ (M N) ∈ T;
+* Application of two terms is a term; M, N ∈ T ⇒ (M N) ∈ T; and
 * A lambda abstraction is a term; x ∈ X Λ M ∈ T ⇒ (λx.M) ∈ T.
+
+Nothing else is a term.
 
 ```haskell
 data PTerm =
