@@ -12,10 +12,10 @@ Nothing else is a term.
 Here is how we can represent a term in Haskell, using an algebraic data type:
 
 ```haskell
-data PTerm =
-    PVar T.Text              -- Variable
-  | PApp PTerm PTerm         -- Application
-  | PLam T.Text PTerm        -- Lambda abstraction
+data Term =
+    Var T.Text              -- Variable
+  | App Term Term           -- Application
+  | Lam T.Text Term        -- Lambda abstraction
   deriving (Show, Eq)
 ```
 
