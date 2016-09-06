@@ -13,9 +13,9 @@ Here is how one typically represents lambda terms in Haskell:
 
 ```haskell
 data Term =
-    Var T.Text              -- Variable
-  | App Term Term           -- Application
-  | Lam T.Text Term         -- Lambda abstraction
+    Var !T.Text              -- Variable
+  | App !Term !Term           -- Application
+  | Lam !T.Text !Term         -- Lambda abstraction
   deriving (Show, Eq)
 ```
 
