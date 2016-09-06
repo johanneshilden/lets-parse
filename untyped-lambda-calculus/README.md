@@ -9,7 +9,7 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 
 Nothing else is a term.
 
-Here is how one typically represents lambda terms in Haskell, using an algebraic data type:
+Here is how one typically represents lambda terms in Haskell:
 
 ```haskell
 data Term =
