@@ -30,5 +30,5 @@ Lam "x" (Var "x")
 ```haskell
 [ Lam "f" (Lam "x" (App (Var "f") (Var "x")))
 , Lam "f" (Lam "x" (App (Var "f") (App (Var "f") (Var "x"))))
-, ...]
+, ... ]
 ```
