@@ -1,4 +1,6 @@
 
+Untyped Lambda Calculus interpreter.
+
 ```haskell
 data PTerm =
     PLam T.Text PTerm        -- Lambda abstraction
