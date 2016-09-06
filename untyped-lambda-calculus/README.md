@@ -16,3 +16,9 @@ data PTerm =
   | PApp PTerm PTerm         -- Application
   deriving (Show, Eq)
 ```
+
+Some famous terms in the λ calculus are the
+
+* identity function (λx.x);
+* Y-combinator (λf.(λx.(f (x x))) (λx.(f (x x)))); and
+* Church numerals (λf.λx.f x), (λf.λx.f (f x)), ...
