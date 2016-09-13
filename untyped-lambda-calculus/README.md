@@ -62,11 +62,11 @@ parens p = char '(' *> p <* char ')'
 
 ```haskell
 lambda :: Parser PTerm -> Parser PTerm
-lambda body = do
+lambda term = do
     oneOf "λ\\"
     name <- many1 alphaNum
     skipSpace *> char '.' <* skipSpace 
-    body <- body
+    body <- term
     return $ Lam (T.pack name) body
 ```
 
