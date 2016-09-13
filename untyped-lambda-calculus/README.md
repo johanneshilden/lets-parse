@@ -60,7 +60,27 @@ parens p = char '(' *> p <* char ')'
 
 ### Lambda abstractions
 
+```haskell
+lambda :: Parser PTerm -> Parser PTerm
+lambda body = do
+    oneOf "\\λ"
+    name <- many1 alphaNum
+    skipSpace *> symbol <* skipSpace 
+    body <- body
+    return $ Lam (T.pack name) body
+  where
+    symbol = void (char '.') 
+         <|> void (string "->")
+```
+
 ### Variables
+
+```haskell
+var :: Parser PTerm
+var = do
+  name <- many1 alphaNum
+  return $ Var (T.pack name)
+```
 
 ### Applications
 
