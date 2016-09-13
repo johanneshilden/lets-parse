@@ -63,24 +63,16 @@ parens p = char '(' *> p <* char ')'
 ```haskell
 lambda :: Parser PTerm -> Parser PTerm
 lambda body = do
-    oneOf "\\λ"
+    oneOf "λ\\"
     name <- many1 alphaNum
-    skipSpace *> symbol <* skipSpace 
+    skipSpace *> char '.' <* skipSpace 
     body <- body
     return $ Lam (T.pack name) body
-  where
-    symbol = void (char '.') 
-         <|> void (string "->")
 ```
 
 The lambda expression parser takes the parser for the abstraction body as an argument. Technically, it wouldn't be a [combinator](https://wiki.haskell.org/Combinator) otherwise. More importantly, this makes it easy to work with the function on its own &ndash; in particular since we haven't implemented the parser for the term itself yet.
 
-We allow some flexibility in how lambda terms are constructed. The parser accepts both
-
-* lambda calculus notation, like `λx.λy.add x y`, and
-* Haskell-style syntax, e.g., `\x -> x`, using arrows and backslash instead of λ.
-
-In fact, even combinations of these, such as `λx -> λy.add x y` will work.
+We allow backslash to be used as an alias for the λ symbol. The variable name is made up of one or more alphanumeric characters. Blank space between the variable and abstraction body is ignored.
 
 ### Variables
 
