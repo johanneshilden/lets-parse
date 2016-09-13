@@ -72,7 +72,7 @@ lambda body = do
 
 The lambda expression parser takes the parser for the abstraction body as an argument. Technically, it wouldn't be a [combinator](https://wiki.haskell.org/Combinator) otherwise. More importantly, this makes it easy to work with the function on its own &ndash; in particular since we haven't implemented the parser for the term itself yet.
 
-We allow backslash to be used as an alias for the λ symbol. The variable name is made up of one or more alphanumeric characters. Blank space between the variable and abstraction body is ignored.
+We allow backslash to be used as an alias for the λ symbol. The variable name is made up of one or more alphanumeric characters. Blank space on both sides of the dot is ignored.
 
 ### Variables
 
