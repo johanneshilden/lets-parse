@@ -78,8 +78,8 @@ lambda body = do
 ```haskell
 var :: Parser PTerm
 var = do
-  name <- many1 alphaNum
-  return $ Var (T.pack name)
+    name <- many1 alphaNum
+    return $ Var (T.pack name)
 ```
 
 ### Applications
