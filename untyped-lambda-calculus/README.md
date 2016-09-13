@@ -25,7 +25,7 @@ This is what we will use as the underlying type for our parser.
 term :: Parser Term
 ```
 
-Some famous expressions in the lambda calculus are 
+Some famous expressions in the lambda calculus, represented using this data type, are 
 
 * the identity function (λx.x);
 ```haskell
