@@ -75,6 +75,13 @@ lambda body = do
 
 The lambda expression parser takes the parser for the abstraction body as an argument. Technically, it wouldn't be a [combinator](https://wiki.haskell.org/Combinator) otherwise. More importantly, this makes it easy to work with the function on its own &ndash; in particular since we haven't implemented the parser for the term itself yet.
 
+We allow some flexibility in how lambda terms are constructed. The parser accepts both
+
+* lambda calculus notation, like `λx.λy.add x y`, and
+* Haskell-style syntax, e.g., `\x -> x`, using arrows and backslash instead of λ.
+
+In fact, even combinations of these, such as `λx -> λy.add x y` will work.
+
 ### Variables
 
 ```haskell
