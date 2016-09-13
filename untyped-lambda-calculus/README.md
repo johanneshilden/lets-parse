@@ -45,4 +45,17 @@ Lam "f" (App (Lam "x" (App (Var "f") (App (Var "x") (Var "x"))))
 
 Later we will look at translation of these values into other, intermediate representation forms, more suitable for evaluation.
 
-https://en.wikipedia.org/wiki/De_Bruijn_index
+### Helpers
+
+```haskell
+oneOf :: String -> Parser Char
+oneOf = satisfy . inClass
+
+alphaNum :: Parser Char
+alphaNum = satisfy isAlphaNum 
+
+parens :: Parser a -> Parser a
+parens p = char '(' *> p <* char ')'
+```
+
+<!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
