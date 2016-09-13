@@ -73,6 +73,8 @@ lambda body = do
          <|> void (string "->")
 ```
 
+The lambda expression parser takes the term parser as an argument. Technically, it wouldn't be a combinator otherwise. More importantly, this makes it easy to work with the function on its own.
+
 ### Variables
 
 ```haskell
