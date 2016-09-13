@@ -58,4 +58,10 @@ parens :: Parser a -> Parser a
 parens p = char '(' *> p <* char ')'
 ```
 
+### Lambda abstractions
+
+### Variables
+
+### Applications
+
 <!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
