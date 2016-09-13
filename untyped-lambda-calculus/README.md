@@ -73,7 +73,7 @@ lambda body = do
          <|> void (string "->")
 ```
 
-The lambda expression parser takes the term parser as an argument. Technically, it wouldn't be a combinator otherwise. More importantly, this makes it easy to work with the function on its own.
+The lambda expression parser takes the parser for the abstraction body as an argument. Technically, it wouldn't be a combinator otherwise. More importantly, this makes it easy to work with the function on its own &ndash; in particular since we haven't implemented the parser for the term itself yet.
 
 ### Variables
 
