@@ -77,7 +77,7 @@ We allow backslash to be used as an alias for the λ symbol. The variable name i
 ### Variables
 
 ```haskell
-var :: Parser PTerm
+var :: Parser Term
 var = do
     name <- many1 alphaNum
     return $ Var (T.pack name)
