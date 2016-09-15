@@ -61,7 +61,7 @@ parens p = char '(' *> p <* char ')'
 ### Lambda abstractions
 
 ```haskell
-lambda :: Parser PTerm -> Parser PTerm
+lambda :: Parser Term -> Parser Term
 lambda term = do
     oneOf "λ\\"
     name <- many1 alphaNum
