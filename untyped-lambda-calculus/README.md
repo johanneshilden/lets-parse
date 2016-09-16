@@ -19,7 +19,7 @@ data Term =
   deriving (Show, Eq)
 ```
 
-It is also what we will use as the underlying type for our parser. 
+We will use this as the underlying type for our parser. 
 
 ```haskell
 term :: Parser Term
