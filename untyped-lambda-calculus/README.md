@@ -76,6 +76,8 @@ We allow backslash to be used as an alias for the λ symbol. The variable name i
 
 ### Variables
 
+To parse a variable name on its own, we simply reuse the relevant part of our lambda parser.
+
 ```haskell
 var :: Parser Term
 var = do
