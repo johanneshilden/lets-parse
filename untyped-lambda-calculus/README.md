@@ -9,7 +9,7 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 
 Nothing else is a term. Application is left-associative, so the term (s t u) is equivalent to ((s t) u). We typically omit outermost parentheses.
 
-Here is how one typically represents lambda terms in Haskell:
+Here is how one can represent lambda terms in Haskell:
 
 ```haskell
 data Term =
