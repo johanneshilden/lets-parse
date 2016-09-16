@@ -7,7 +7,7 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 * Application of two terms is a term; M, N ∈ T ⇒ (M N) ∈ T; and
 * A lambda abstraction is a term; x ∈ X Λ M ∈ T ⇒ (λx.M) ∈ T.
 
-Nothing else is a term. Application is left-associative, so the term (s t u) is equivalent to ((s t) u).
+Nothing else is a term. Application is left-associative, so the term (s t u) is equivalent to ((s t) u). We typically omit outermost parentheses.
 
 Here is how one typically represents lambda terms in Haskell:
 
