@@ -113,11 +113,11 @@ T → E E*            <br />
 E → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
 
-However, to turn this into a proper grammar, we need to replace E* with a new production S&nbsp;→&nbsp;ε&nbsp;|&nbsp;T. 
+However, to turn this into a proper grammar, we need to replace E* with a new production E'&nbsp;→&nbsp;ε&nbsp;|&nbsp;T. 
 
-T → E S             <br />
-S → ε | T           <br />
+T → E E'            <br />
 E → α | λα.T | (T)  <br />
+E' → ε | T          <br />
 α → x | y | ...     <br />
 
 ### REPL
