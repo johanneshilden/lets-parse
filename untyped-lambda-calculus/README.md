@@ -87,6 +87,8 @@ var = do
 
 ### Applications
 
+The last type of term is application. First, we will look at something that is not going to work. 
+
 ```haskell
 badterm :: Parser Term
 badterm = var <|> parens badterm <|> lambda badterm <|> app
@@ -99,7 +101,7 @@ app = do
     return $ App a b
 ```
 
-This is not going to work. Given the application x y, this parser will prematurely accept x, before the entire term is read. We could try to fix this by placing the application parser first to give it precedence;
+Given the application x y, this parser will prematurely accept x, before the entire term is read. We could try to fix this by placing the application parser first to give it precedence;
 
 ```haskell
 badterm = app <|> var <|> parens badterm <|> lambda badterm
