@@ -102,9 +102,14 @@ T() {
 }
 ```
 
-A production of a context-free grammar is said to be left recursive if it has the form
+A production of a context-free grammar is said to be left recursive if it has the form A → Aa. 
 
-A → Aa
+The language for the grammar A → Aa | B is Ba*. 
+
+A  → BA' <br />
+A' → aA' | ε <br />
+
+
 
 T → V V*            <br />
 V → α | λα.T | (T)  <br />
