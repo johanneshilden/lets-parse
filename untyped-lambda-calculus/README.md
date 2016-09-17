@@ -95,6 +95,13 @@ T → T T    <br />
 
 We have a problem here with the 4th rule.
 
+```
+T() {
+  T()
+  ...
+}
+```
+
 T → V V*            <br />
 V → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
