@@ -99,13 +99,13 @@ app = do
     return $ App a b
 ```
 
-This is not going to work. Given the application x y, this parser will prematurely accept x, before the entire term is read. h We could try to fix this by placing the application parser first to give it precedence;
+This is not going to work. Given the application x y, this parser will prematurely accept x, before the entire term is read. We could try to fix this by placing the application parser first to give it precedence;
 
 ```haskell
 badterm = app <|> var <|> parens badterm <|> lambda badterm
 ```
 
-but then we end up with an infinite loop.
+but then we end up with an infinite loop. Looking at the production rules for the context-free grammar of this parser, we have something like the following:  
 
 T → α      <br />
 T → (T)    <br />
@@ -114,6 +114,8 @@ T → T T    <br />
 α → x | y | ... <br />
 
 We have a problem here with the 4th rule.
+
+#### Eliminating left recursion
 
 A production of a context-free grammar is said to be left recursive if it has the form A&nbsp;→&nbsp;Aa. Since this is problematic for parsers, a common task is to eliminate left recursion by finding a (weakly) equivalent right-recursive grammar for the language defined by a left-recursive grammar. For instance, the language for the grammar A&nbsp;→&nbsp;Aa&nbsp;|&nbsp;B is Ba*. The right-recursive grammar for this language is
 
