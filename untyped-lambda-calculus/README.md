@@ -95,6 +95,11 @@ T → T T    <br />
 
 We have a problem here with the 4th rule.
 
+T → S T             <br />
+S → α | λα.T | (T)  <br />
+α → x | y | ...     <br />
+
+
 ### REPL
 
 <!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
