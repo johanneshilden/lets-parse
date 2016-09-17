@@ -104,7 +104,7 @@ T() {
 
 A production of a context-free grammar is said to be left recursive if it has the form A → Aa. 
 
-The language for the grammar A → Aa | B is Ba*. 
+The language for the grammar A → Aa | B is Ba*. The right-recursive grammar for this language is
 
 A  → BA' <br />
 A' → aA' | ε <br />
