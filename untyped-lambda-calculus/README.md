@@ -102,9 +102,7 @@ T() {
 }
 ```
 
-A production of a context-free grammar is said to be left recursive if it has the form A → Aa. Since this is problematic for parsers, a common task is to eliminate left recursion by finding a (weakly) equivalent right-recursive grammar for the language defined by the grammar.
-
-For instance, the language for the grammar A → Aa | B is Ba*. The right-recursive grammar for this language is
+A production of a context-free grammar is said to be left recursive if it has the form A → Aa. Since this is problematic for parsers, a common task is to eliminate left recursion by finding a (weakly) equivalent right-recursive grammar for the language defined by the grammar. For instance, the language for the grammar A → Aa | B is Ba*. The right-recursive grammar for this language is
 
 A  → BA' <br />
 A' → aA' | ε <br />
