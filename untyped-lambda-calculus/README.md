@@ -93,6 +93,21 @@ T → λα.T   <br />
 T → T T    <br />
 α → x | y | ... <br />
 
+```haskell
+badterm :: Parser Term
+badterm = var        
+      <|> parens badterm
+      <|> lambda badterm
+      <|> app
+
+app :: Parser Term
+app = do
+    a <- badterm 
+    skipSpace
+    b <- badterm 
+    return $ App a b
+```
+
 We have a problem here with the 4th rule.
 
 ```
