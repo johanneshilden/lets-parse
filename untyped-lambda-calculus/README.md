@@ -87,10 +87,10 @@ var = do
 
 ### Applications
 
-T → α
-T → (T)
-T → λα.T
-T → T T      
+T → α      <br />
+T → (T)    <br />
+T → λα.T   <br />
+T → T T    <br />
 
 ### REPL
 
