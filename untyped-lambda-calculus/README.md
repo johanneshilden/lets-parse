@@ -91,6 +91,9 @@ T → α      <br />
 T → (T)    <br />
 T → λα.T   <br />
 T → T T    <br />
+α → x | y | ... <br />
+
+We have a problem here with the 4th rule.
 
 ### REPL
 
