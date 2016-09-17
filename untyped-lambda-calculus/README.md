@@ -143,7 +143,7 @@ term = do
     terms <- many1 (skipSpace *> expr <* skipSpace)
     return $ foldl1 App terms
   where
-    expr :: Parser PTerm
+    expr :: Parser Term
     expr = parens term    -- (M)
        <|> lambda term    -- \x.M
        <|> var            -- x
