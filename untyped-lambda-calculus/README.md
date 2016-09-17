@@ -87,7 +87,15 @@ var = do
 
 ### Applications
 
-The last type of term is application. First, we will look at something that is not going to work. 
+The last type of term is application. Looking at the production rules for the context-free grammar of the language we are trying to describe, we have something like the following:  
+
+T → α      <br />
+T → (T)    <br />
+T → λα.T   <br />
+T → T T    <br />
+α → x | y | ... <br />
+
+Translating this into code,
 
 ```haskell
 badterm :: Parser Term
@@ -101,21 +109,13 @@ app = do
     return $ App a b
 ```
 
-Given the application x y, this parser will prematurely accept x, before the entire term is read. We could try to fix this by placing the application parser first to give it precedence;
+we find that &ndash; given, for example, the application x&nbsp;y, this parser will prematurely accept x before the entire term is read. We could try to fix this by placing the application parser first to give it precedence;
 
 ```haskell
 badterm = app <|> var <|> parens badterm <|> lambda badterm
 ```
 
-but then we end up with an infinite loop. Looking at the production rules for the context-free grammar of this parser, we have something like the following:  
-
-T → α      <br />
-T → (T)    <br />
-T → λα.T   <br />
-T → T T    <br />
-α → x | y | ... <br />
-
-We have a problem here with the 4th rule.
+but then we end up with an infinite loop. We have a problem here with the 4th rule: T → T&nbps;T.
 
 #### Eliminating left recursion
 
