@@ -95,10 +95,10 @@ T → T T    <br />
 
 We have a problem here with the 4th rule.
 
-T → S T             <br />
-S → α | λα.T | (T)  <br />
+T → V S             <br />
+S → ε | V S         <br />
+V → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
-
 
 ### REPL
 
