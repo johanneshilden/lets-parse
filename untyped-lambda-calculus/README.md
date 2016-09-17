@@ -109,15 +109,15 @@ A' → aA' | ε <br />
 
 
 
-T → V V*            <br />
-V → α | λα.T | (T)  <br />
+T → E E*            <br />
+E → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
 
 
 
-T → V S             <br />
+T → E S             <br />
 S → ε | T           <br />
-V → α | λα.T | (T)  <br />
+E → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
 
 ### REPL
