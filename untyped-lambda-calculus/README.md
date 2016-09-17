@@ -115,7 +115,7 @@ we find that &ndash; given, for example, the application x&nbsp;y, this parser w
 badterm = app <|> var <|> parens badterm <|> lambda badterm
 ```
 
-but then we end up with an infinite loop. We have a problem here with the 4th rule: T → T&nbps;T.
+but then we end up with an infinite loop. We have a problem here with the rule T → T&nbsp;T.
 
 #### Eliminating left recursion
 
