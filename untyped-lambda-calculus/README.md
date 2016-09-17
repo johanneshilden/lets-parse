@@ -87,18 +87,9 @@ var = do
 
 ### Applications
 
-T → α      <br />
-T → (T)    <br />
-T → λα.T   <br />
-T → T T    <br />
-α → x | y | ... <br />
-
 ```haskell
 badterm :: Parser Term
-badterm = var        
-      <|> parens badterm
-      <|> lambda badterm
-      <|> app
+badterm = var <|> parens badterm <|> lambda badterm <|> app
 
 app :: Parser Term
 app = do
@@ -108,13 +99,19 @@ app = do
     return $ App a b
 ```
 
+This is not going to work. Given the application x y, this parser will prematurely accept x, before the entire term is read. h We could try to fix this by placing the application parser first to give it precedence;
+
 ```haskell
-badterm :: Parser Term
-badterm = app
-      <|> var        
-      <|> parens badterm
-      <|> lambda badterm
+badterm = app <|> var <|> parens badterm <|> lambda badterm
 ```
+
+but then we end up with an infinite loop.
+
+T → α      <br />
+T → (T)    <br />
+T → λα.T   <br />
+T → T T    <br />
+α → x | y | ... <br />
 
 We have a problem here with the 4th rule.
 
