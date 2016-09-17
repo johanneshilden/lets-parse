@@ -120,6 +120,18 @@ E → α | λα.T | (T)  <br />
 E' → ε | T          <br />
 α → x | y | ...     <br />
 
+```haskell
+term :: Parser Term
+term = do
+    terms <- many1 (skipSpace *> expr <* skipSpace)
+    return $ foldl1 App terms
+  where
+    expr :: Parser PTerm
+    expr = parens term    -- (M)
+       <|> lambda term    -- \x.M
+       <|> var            -- x
+```
+
 ### REPL
 
 <!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
