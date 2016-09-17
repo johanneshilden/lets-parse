@@ -87,6 +87,11 @@ var = do
 
 ### Applications
 
-<!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
+T → α        
+T → (T)
+T → λα.T     
+T → T T      
 
 ### REPL
+
+<!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
