@@ -108,6 +108,14 @@ app = do
     return $ App a b
 ```
 
+```haskell
+badterm :: Parser Term
+badterm = app
+      <|> var        
+      <|> parens badterm
+      <|> lambda badterm
+```
+
 We have a problem here with the 4th rule.
 
 ```
