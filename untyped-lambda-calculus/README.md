@@ -7,7 +7,7 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 * Application of two terms is a term; M, N ∈ T ⇒ (M N) ∈ T; and
 * A lambda abstraction is a term; x ∈ X Λ M ∈ T ⇒ (λx.M) ∈ T.
 
-Nothing else is a term. Application is left-associative, so the term (s t u) is equivalent to ((s t) u). We often omit outermost parentheses. In abstractions, the body extends as far to the right as possible; e.g., λx.u v z = λx.(u v z).
+Nothing else is a term. Application is left-associative, so the term (s&nbsp;t&nbsp;u) is equivalent to ((s&nbsp;t)&nbsp;u). We often omit outermost parentheses. In abstractions, the body extends as far to the right as possible; e.g., λx.u&nbsp;v&nbsp;z&nbsp;=&nbsp;λx.(u&nbsp;v&nbsp;z).
 
 Here is how one can represent lambda terms in Haskell:
 
@@ -114,13 +114,6 @@ T → T T    <br />
 α → x | y | ... <br />
 
 We have a problem here with the 4th rule.
-
-```
-T() {
-  T()
-  ...
-}
-```
 
 A production of a context-free grammar is said to be left recursive if it has the form A&nbsp;→&nbsp;Aa. Since this is problematic for parsers, a common task is to eliminate left recursion by finding a (weakly) equivalent right-recursive grammar for the language defined by a left-recursive grammar. For instance, the language for the grammar A&nbsp;→&nbsp;Aa&nbsp;|&nbsp;B is Ba*. The right-recursive grammar for this language is
 
