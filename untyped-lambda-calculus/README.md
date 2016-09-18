@@ -126,7 +126,7 @@ A production of a context-free grammar is said to be left recursive if it has th
 A  → BA' <br />
 A' → aA' | ε <br />
 
-
+Going back to our language, we can express the term grammar in this form:
 
 T → E E*            <br />
 E → α | λα.T | (T)  <br />
