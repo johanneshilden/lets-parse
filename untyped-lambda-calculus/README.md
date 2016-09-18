@@ -139,10 +139,12 @@ E → α | λα.T | (T)  <br />
 E' → ε | T          <br />
 α → x | y | ...     <br />
 
+We use `many1` to match one or more terms, and then fold the resulting list using the `App` constructor.
+
 ```haskell
 term :: Parser Term
 term = do
-    terms <- many1 (skipSpace *> expr <* skipSpace)
+    terms <- many1 (skipSpace >> expr)
     return $ foldl1 App terms
   where
     expr :: Parser Term
