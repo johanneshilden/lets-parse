@@ -93,10 +93,7 @@ var = do
 
 The last type of term is application. Looking at the production rules for the context-free grammar of the language we are trying to describe, we have something like the following:  
 
-T → α      <br />
-T → (T)    <br />
-T → λα.T   <br />
-T → T T    <br />
+T → α | (T) | λα.T | T T <br />
 α → x | y | ... <br />
 
 Translating this into code,
