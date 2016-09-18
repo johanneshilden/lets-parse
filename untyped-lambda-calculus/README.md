@@ -154,6 +154,7 @@ term = do
 
 ## Evaluation
 
+### Call-by-value vs. call-by-name evaluation order
 
 ### REPL
 
