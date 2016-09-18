@@ -1,6 +1,8 @@
 
 Untyped Lambda Calculus parser and interpreter.
 
+## Parsing
+
 In the untyped lambda calculus, a *term* is one of three things. Let T denote the set of terms, and let X be an infinite set of variables {x, y, z, ...}. Then,
 
 * A variable is a term; x ∈ X ⇒ x ∈ T;
@@ -152,6 +154,9 @@ term = do
        <|> lambda term    -- \x.M
        <|> parens term    -- (M)
 ```
+
+## Evaluation
+
 
 ### REPL
 
