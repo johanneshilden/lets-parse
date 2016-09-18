@@ -54,8 +54,7 @@ oneOf = satisfy . inClass
 alphaNum :: Parser Char
 alphaNum = satisfy valid
   where
-    valid ch | 'λ' == ch = False
-             | otherwise = isAlphaNum ch
+    valid c = all ($ c) [ isAscii, isAlphaNum ]
 
 parens :: Parser a -> Parser a
 parens p = char '(' *> p <* char ')'
