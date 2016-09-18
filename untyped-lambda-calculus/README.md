@@ -52,7 +52,10 @@ oneOf :: String -> Parser Char
 oneOf = satisfy . inClass
 
 alphaNum :: Parser Char
-alphaNum = satisfy isAlphaNum 
+alphaNum = satisfy valid
+  where
+    valid ch | 'λ' == ch = False
+             | otherwise = isAlphaNum ch
 
 parens :: Parser a -> Parser a
 parens p = char '(' *> p <* char ')'
@@ -109,7 +112,7 @@ app = do
     return $ App a b
 ```
 
-we find that &ndash; given, for example, the application x&nbsp;y, this parser will prematurely accept x before the entire term is read. We could try to fix this by placing the application parser first to give it precedence;
+we find that &ndash; given, for example, the application x&nbsp;y, this parser will prematurely accept x before the entire input is read. We could try to fix this by placing the application parser first to give it precedence;
 
 ```haskell
 badterm = app <|> var <|> parens badterm <|> lambda badterm
@@ -144,9 +147,9 @@ term = do
     return $ foldl1 App terms
   where
     expr :: Parser Term
-    expr = parens term    -- (M)
+    expr = var            -- x
        <|> lambda term    -- \x.M
-       <|> var            -- x
+       <|> parens term    -- (M)
 ```
 
 ### REPL
