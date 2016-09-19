@@ -171,13 +171,18 @@ term = do
 ## Evaluation
 
 ```haskell
-data Expr               -- Term
-  = Bound Int           -- Bound variable (TAPL depth indexed)
+data Expr
+  = Bound Int           -- Bound variable (depth indexed)
   | Free T.Text         -- Free variable
   | EApp Expr Expr      -- Application
   | ELam Expr           -- Lambda abstraction
   deriving (Eq, Show)
 ```
+
+---------------------------
+| λx.x | (ELam (Bound 0)) |
+| λx.x | (ELam (Bound 0)) |
+---------------------------
 
 ### Beta-reduction rule
 
