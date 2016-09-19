@@ -98,7 +98,7 @@ T → α | (T) | λα.T | T T <br />
 α → x | y | ... <br />
 -->
 
-<img src="01.png" height="54" align="center">
+<img src="01.png" height="50%">
 
 Translating this into code,
 
@@ -126,21 +126,33 @@ but then we end up with an infinite loop. We have a problem here with the rule T
 
 A production of a context-free grammar is said to be left recursive if it has the form A&nbsp;→&nbsp;Aa. Since this is problematic for parsers, a common task is to eliminate left recursion by finding a (weakly) equivalent right-recursive grammar for the language defined by a left-recursive grammar. For instance, the language for the grammar A&nbsp;→&nbsp;Aa&nbsp;|&nbsp;B is Ba*. The right-recursive grammar for this language is
 
+<!--
 A  → BA' <br />
 A' → aA' | ε <br />
+-->
+
+<img src="02.png" height="50%">
 
 Going back to our language, we can express the term grammar in this form:
 
+<!--
 T → E E*            <br />
 E → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
+-->
+
+<img src="03.png" height="50%">
 
 However, to turn this into a proper grammar, we need to replace E* with a new production E'&nbsp;→&nbsp;ε&nbsp;|&nbsp;T. 
 
+<!--
 T → E E'            <br />
 E → α | λα.T | (T)  <br />
 E' → ε | T          <br />
 α → x | y | ...     <br />
+-->
+
+<img src="04.png" height="50%">
 
 We use `many1` to match one or more terms, and then fold the resulting list using the `App` constructor.
 
