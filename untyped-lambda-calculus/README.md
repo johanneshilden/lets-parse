@@ -170,7 +170,18 @@ term = do
 
 ## Evaluation
 
-### Call-by-value vs. call-by-name evaluation order
+```haskell
+data Expr               -- Term
+  = Bound Int           -- Bound variable (TAPL depth indexed)
+  | Free T.Text         -- Free variable
+  | EApp Expr Expr      -- Application
+  | ELam Expr           -- Lambda abstraction
+  deriving (Eq, Show)
+```
+
+### Substitution rules
+
+### Evaluation strategies
 
 ### REPL
 
