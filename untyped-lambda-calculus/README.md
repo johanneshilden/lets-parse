@@ -179,10 +179,10 @@ data Expr
   deriving (Eq, Show)
 ```
 
----------------------------
+| Term | Data type repr.  |
+|------|------------------|
 | λx.x | (ELam (Bound 0)) |
 | λx.x | (ELam (Bound 0)) |
----------------------------
 
 ### Beta-reduction rule
 
