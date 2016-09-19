@@ -98,7 +98,7 @@ T → α | (T) | λα.T | T T <br />
 α → x | y | ... <br />
 -->
 
-<img src="01.png" height="50">
+<img src="01.png" height="54" align="center">
 
 Translating this into code,
 
