@@ -98,7 +98,7 @@ T → α | (T) | λα.T | T T <br />
 α → x | y | ... <br />
 -->
 
-![Production rules](01.png)
+![](01.png | height = 40)
 
 Translating this into code,
 
