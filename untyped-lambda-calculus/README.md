@@ -98,7 +98,7 @@ T → α | (T) | λα.T | T T <br />
 α → x | y | ... <br />
 -->
 
-<img src="01.png" height="50%">
+<img src="01.png">
 
 Translating this into code,
 
@@ -131,7 +131,7 @@ A  → BA' <br />
 A' → aA' | ε <br />
 -->
 
-<img src="02.png" height="50%">
+<img src="02.png">
 
 Going back to our language, we can express the term grammar in this form:
 
@@ -141,7 +141,7 @@ E → α | λα.T | (T)  <br />
 α → x | y | ...     <br />
 -->
 
-<img src="03.png" height="50%">
+<img src="03.png">
 
 However, to turn this into a proper grammar, we need to replace E* with a new production E'&nbsp;→&nbsp;ε&nbsp;|&nbsp;T. 
 
@@ -152,7 +152,7 @@ E' → ε | T          <br />
 α → x | y | ...     <br />
 -->
 
-<img src="04.png" height="50%">
+<img src="04.png">
 
 We use `many1` to match one or more terms, and then fold the resulting list using the `App` constructor.
 
@@ -179,7 +179,9 @@ data Expr               -- Term
   deriving (Eq, Show)
 ```
 
-### Substitution rules
+### Beta-reduction rule
+
+<img src="05.png">
 
 ### Evaluation strategies
 
