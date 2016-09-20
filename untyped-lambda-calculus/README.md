@@ -170,11 +170,19 @@ term = do
 
 ## Evaluation
 
-The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem known as the capture problem. There are two types of variables that can appear in a lambda term; **bound** variables and **free** variables. 
+The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem known as the capture problem. 
+
+### The capture problem
+
+There are two types of variables that can appear in a lambda term; **bound** variables and **free** variables. Let FV(t) denote the set of all free variables of the term t. Then,
 
 * FV(x) = { x }
 * FV(λx.M) = FV(M) \ { x }
-* FV(M N) = FV(M) ∪ FV(N) 
+* FV(M N) = FV(M) ∪ FV(N).
+
+### De Bruijn indexing
+
+<!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
 
 ```haskell
 data Expr
@@ -202,5 +210,3 @@ data Expr
 ### Evaluation strategies
 
 ### REPL
-
-<!-- https://en.wikipedia.org/wiki/De_Bruijn_index -->
