@@ -170,15 +170,17 @@ term = do
 
 ## Evaluation
 
-The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem known as the capture problem. 
-
 ### The capture problem
 
-There are two types of variables that can appear in a lambda term; **bound** variables and **free** variables. Let FV(t) denote the set of all free variables of the term t. Then,
+The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem. Variables that appear in lambda terms can be of two types; **bound** or **free**. Let FV(t) denote the set of all free variables of the term t. Then,
 
+<img src="06.png">
+
+<!--
 * FV(x) = { x }
 * FV(λx.M) = FV(M) \ { x }
 * FV(M N) = FV(M) ∪ FV(N).
+-->
 
 ### De Bruijn indexing
 

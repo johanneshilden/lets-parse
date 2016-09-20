@@ -1,0 +1,12 @@
+\documentclass[convert={density=300,size=1080x800,outext=.png}]{standalone}
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd,graphicx,mathtools}
+
+\begin{document}
+
+\begin{tabular}{r@{ }l}
+  $ FV(x) $ & $ = \{ x \} $ \\
+  $ FV(\lambda x . M) $ & $ = FV(M) \ \backslash \ \{ x \} $ \\
+  $ FV(M N) $ & $ = FV(M) \cup FV(N) $
+\end{tabular}
+
+\end{document}
