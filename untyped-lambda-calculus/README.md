@@ -170,9 +170,9 @@ term = do
 
 ## Evaluation
 
-The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem known as the capture problem. There are two types of variables that can appear in a lambda term; bound variables and free variables. 
+The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem known as the capture problem. There are two types of variables that can appear in a lambda term; **bound** variables and **free** variables. 
 
-* FV(x) = { x };
+* FV(x) = { x }
 * FV(λx.M) = FV(M) \ { x }
 * FV(M N) = FV(M) ∪ FV(N) 
 
