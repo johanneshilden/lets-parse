@@ -170,6 +170,14 @@ term = do
 
 ## Evaluation
 
+The `Term` type we have used so far is convenient for parsing, but it is vulnerable to a problem known as the capture problem. There are two types of variables that can appear in a lambda term; bound variables and free variables. 
+
+* FV(x) = { x };
+* FV(λx.M) = FV(M) \ { x }
+* FV(M N) = FV(M) ∪ FV(N) 
+
+\x.x 
+
 ```haskell
 data Expr
   = Bound Int           -- Bound variable (depth indexed)
@@ -179,10 +187,14 @@ data Expr
   deriving (Eq, Show)
 ```
 
-| Term | Data type repr.  |
-|------|------------------|
-| λx.x | (ELam (Bound 0)) |
-| λx.x | (ELam (Bound 0)) |
+| Term                   |                     | Data type repr.                               |
+|------------------------|---------------------|-----------------------------------------------|
+| λx.x                   | λ.0                 | (ELam (Bound 0))                              |
+| λx.x y                 | λ.0 y               | (ELam (EApp (Bound 0) (Free "y"))             |
+| λx.λy.y x              | λ.λ.0 0             | Lam (Lam (App (Bound 0) (Bound 1)))           |
+| (a b)                  | a b                 | EApp (Free "a") (Free "b")                    |
+| (λx.(λx.(λx.x x) x) x) | λ.(λ.(λ.0 0) 0) 0   | ELam (EApp (ELam (EApp (ELam (EApp (Bound 0) (Bound 0))) (Bound 0))) (Bound 0)) |
+| (λx.(λy.x y) x)        | λ.(λ.1 0) 0         | ELam (EApp (ELam (EApp (Bound 1) (Bound 0))) (Bound 0)) |
 
 ### Beta-reduction rule
 
