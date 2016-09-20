@@ -91,7 +91,7 @@ var = do
 
 ### Applications
 
-The last type of term is application. Looking at the production rules for the context-free grammar of the language we are trying to describe, we have something like the following:  
+The last type of term is application. Looking at the production rules for the [context-free grammar](https://en.wikipedia.org/wiki/Context-free_grammar) of the language we are trying to describe, we have something like the following:  
 
 <!--
 T → α | (T) | λα.T | T T <br />
