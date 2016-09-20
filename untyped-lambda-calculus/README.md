@@ -197,13 +197,15 @@ data Expr
 
 | Term                   | Depth-indexed       | Data type repr.                               |
 |------------------------|---------------------|-----------------------------------------------|
-| λx.x                   | λ 0                 | (ELam (B 0))                              |
-| λy.y                   | λ 0                 | (ELam (B 0))                              |
-| λx.x y                 | λ 0 y               | (ELam (EApp (B 0) (F "y"))             |
-| λx.λy.y x              | λ λ 0 1             | Lam (Lam (App (B 0) (B 1)))           |
-| (a b)                  | a b                 | EApp (F "a") (F "b")                    |
+| λx.x                   | λ 0                 | (ELam (B 0))                                  |
+| λy.y                   | λ 0                 | (ELam (B 0))                                  |
+| λx.x y                 | λ 0 y               | (ELam (EApp (B 0) (F "y"))                    |
+| λx.λy.y x              | λ λ 0 1             | Lam (Lam (App (B 0) (B 1)))                   |
+| (a b)                  | a b                 | EApp (F "a") (F "b")                          |
 | (λx.(λx.(λx.x x) x) x) | λ (λ (λ 0 0) 0) 0   | ELam (EApp (ELam (EApp (ELam (EApp (B 0) (B 0))) (B 0))) (B 0)) |
-| (λx.(λy.x y) x)        | λ (λ 1 0) 0         | ELam (EApp (ELam (EApp (B 1) (B 0))) (B 0)) |
+| (λx.(λy.x y) x)        | λ (λ 1 0) 0         | ELam (EApp (ELam (EApp (B 1) (B 0))) (B 0))   |
+
+Note that the first two &ndash; [alpha equivalent](http://c2.com/cgi/wiki?AlphaEquivalence) &ndash; terms yield the same `Expr` value. 
 
 ### Beta-reduction rule
 
