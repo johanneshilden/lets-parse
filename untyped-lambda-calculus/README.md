@@ -11,6 +11,13 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 
 Nothing else is a term. Application is left-associative, so the term (s&nbsp;t&nbsp;u) is equivalent to ((s&nbsp;t)&nbsp;u). We often omit outermost parentheses. In abstractions, the body extends as far to the right as possible; e.g., λx.u&nbsp;v&nbsp;z&nbsp;≡&nbsp;λx.(u&nbsp;v&nbsp;z).
 
+```haskell
+import Data.Attoparsec.Text
+import Data.Char                      ( isAlphaNum, isAscii ) 
+import Control.Applicative            ( (<$>), (<*>), (<*), (*>), (<|>) )
+import Data.Text                      ( Text, pack )
+```
+
 Here is how one can represent lambda terms in Haskell:
 
 ```haskell
@@ -67,11 +74,11 @@ parens p = char '(' *> p <* char ')'
 ```haskell
 lambda :: Parser Term -> Parser Term
 lambda term = do
-    oneOf "λ\\"
+    oneOf "\955\\"                    -- Lambda or backslash 
     name <- many1 alphaNum
     skipSpace *> char '.' <* skipSpace 
     body <- term
-    return $ Lam (T.pack name) body
+    return $ Lam (pack name) body
 ```
 
 Notice that the lambda expression parser takes the parser for the abstraction body as an argument. Technically, it wouldn't be a [combinator](https://wiki.haskell.org/Combinator) otherwise. More importantly, this makes it easier to work with the function on its own &ndash; in particular since we haven't implemented the parser for the term itself yet.
@@ -86,12 +93,12 @@ To parse a variable name, we simply reuse the relevant part of our lambda parser
 var :: Parser Term
 var = do
     name <- many1 alphaNum
-    return $ Var (T.pack name)
+    return $ Var (pack name)
 ```
 
 ### Applications
 
-The last type of term is application. Looking at the production rules for the context-free grammar of the language we are trying to describe, we have something like the following:  
+The last type of term is application. Looking at the production rules for the [context-free grammar](https://en.wikipedia.org/wiki/Context-free_grammar) of the language we are trying to describe, we have something like the following:  
 
 <!--
 T → α | (T) | λα.T | T T <br />
@@ -197,13 +204,15 @@ data Expr
 
 | Term                   | Depth-indexed       | Data type repr.                               |
 |------------------------|---------------------|-----------------------------------------------|
-| λx.x                   | λ 0                 | (ELam (B 0))                              |
-| λy.y                   | λ 0                 | (ELam (B 0))                              |
-| λx.x y                 | λ 0 y               | (ELam (EApp (B 0) (F "y"))             |
-| λx.λy.y x              | λ λ 0 1             | Lam (Lam (App (B 0) (B 1)))           |
-| (a b)                  | a b                 | EApp (F "a") (F "b")                    |
+| λx.x                   | λ 0                 | (ELam (B 0))                                  |
+| λy.y                   | λ 0                 | (ELam (B 0))                                  |
+| λx.x y                 | λ 0 y               | (ELam (EApp (B 0) (F "y"))                    |
+| λx.λy.y x              | λ λ 0 1             | Lam (Lam (App (B 0) (B 1)))                   |
+| (a b)                  | a b                 | EApp (F "a") (F "b")                          |
 | (λx.(λx.(λx.x x) x) x) | λ (λ (λ 0 0) 0) 0   | ELam (EApp (ELam (EApp (ELam (EApp (B 0) (B 0))) (B 0))) (B 0)) |
-| (λx.(λy.x y) x)        | λ (λ 1 0) 0         | ELam (EApp (ELam (EApp (B 1) (B 0))) (B 0)) |
+| (λx.(λy.x y) x)        | λ (λ 1 0) 0         | ELam (EApp (ELam (EApp (B 1) (B 0))) (B 0))   |
+
+Note that the first two &ndash; [alpha equivalent](http://c2.com/cgi/wiki?AlphaEquivalence) &ndash; terms yield the same `Expr` value. 
 
 ### Beta-reduction rule
 
