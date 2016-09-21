@@ -11,6 +11,13 @@ In the untyped lambda calculus, a *term* is one of three things. Let T denote th
 
 Nothing else is a term. Application is left-associative, so the term (s&nbsp;t&nbsp;u) is equivalent to ((s&nbsp;t)&nbsp;u). We often omit outermost parentheses. In abstractions, the body extends as far to the right as possible; e.g., λx.u&nbsp;v&nbsp;z&nbsp;≡&nbsp;λx.(u&nbsp;v&nbsp;z).
 
+```haskell
+import Data.Attoparsec.Text
+import Data.Char                      ( isAlphaNum, isAscii ) 
+import Control.Applicative            ( (<$>), (<*>), (<*), (*>), (<|>) )
+import Data.Text                      ( Text, pack )
+```
+
 Here is how one can represent lambda terms in Haskell:
 
 ```haskell
@@ -67,11 +74,11 @@ parens p = char '(' *> p <* char ')'
 ```haskell
 lambda :: Parser Term -> Parser Term
 lambda term = do
-    oneOf "λ\\"
+    oneOf "\955\\"                    -- Lambda or backslash 
     name <- many1 alphaNum
     skipSpace *> char '.' <* skipSpace 
     body <- term
-    return $ Lam (T.pack name) body
+    return $ Lam (pack name) body
 ```
 
 Notice that the lambda expression parser takes the parser for the abstraction body as an argument. Technically, it wouldn't be a [combinator](https://wiki.haskell.org/Combinator) otherwise. More importantly, this makes it easier to work with the function on its own &ndash; in particular since we haven't implemented the parser for the term itself yet.
@@ -86,7 +93,7 @@ To parse a variable name, we simply reuse the relevant part of our lambda parser
 var :: Parser Term
 var = do
     name <- many1 alphaNum
-    return $ Var (T.pack name)
+    return $ Var (pack name)
 ```
 
 ### Applications
